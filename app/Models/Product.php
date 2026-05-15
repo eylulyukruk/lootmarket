@@ -11,6 +11,7 @@ class Product extends Model
         'name',
         'game',
         'type',
+        'category',
         'price',
         'stock',
         'image',

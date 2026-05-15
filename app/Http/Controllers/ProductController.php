@@ -11,7 +11,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $category = request('category');
+
+        if ($category) {
+            $products = Product::where('category', $category)->get();
+        } else {
+            $products = Product::all();
+        }
+
         return view('products.index', compact('products'));
     }
 

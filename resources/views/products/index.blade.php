@@ -148,6 +148,18 @@
     <p>Discover premium game skins, items, and digital collectibles in a calm and elegant marketplace.</p>
 </section>
 
+<div style="text-align:center; margin: 10px 0 20px;">
+    <a href="/products" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">All</a>
+
+    <a href="/products?category=Skins" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">Skins</a>
+
+    <a href="/products?category=Knives" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">Knives</a>
+
+    <a href="/products?category=Gear" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">Gear</a>
+
+    <a href="/products?category=Setup" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">Setup</a>
+</div>
+
 <section class="products">
     @foreach($products as $product)
         <div class="card">
@@ -155,6 +167,7 @@
                 <img src="{{ $product->image }}" class="product-image" alt="{{ $product->name }}">
             @endif
             <span class="badge game">{{ $product->game }}</span>
+                <span class="badge">{{ $product->category }}</span>
             <span class="badge">{{ $product->type }}</span>
 
             <h2>{{ $product->name }}</h2>
