@@ -177,7 +177,9 @@
             <div class="price">${{ $product->price }}</div>
             <p class="stock">Stock: {{ $product->stock }}</p>
 
-            <button class="button">View Item</button>
+                <a href="/products/{{ $product->id }}" class="button">
+                    View Item
+                </a>
         </div>
     @endforeach
 </section>

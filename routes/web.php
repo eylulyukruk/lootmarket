@@ -38,3 +38,9 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 Route::resource('products', ProductController::class);
+Route::post('/cart/add/{id}', [ProductController::class, 'addToCart']);
+
+Route::get('/cart', [ProductController::class, 'cart']);
+Route::post('/cart/remove/{id}', [ProductController::class, 'removeFromCart']);
+Route::post('/cart/increase/{id}', [ProductController::class, 'increaseCart']);
+Route::post('/cart/decrease/{id}', [ProductController::class, 'decreaseCart']);
