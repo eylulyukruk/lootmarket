@@ -12,12 +12,26 @@ class ProductController extends Controller
     public function index()
     {
         $category = request('category');
+        $search = request('search');
+
+        $products = Product::query();
 
         if ($category) {
-            $products = Product::where('category', $category)->get();
-        } else {
-            $products = Product::all();
+            $products->where('category', $category);
         }
+
+        if ($search) {
+            $products->where(function ($query) use ($search) {
+
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('game', 'like', "%{$search}%")
+                    ->orWhere('type', 'like', "%{$search}%")
+                    ->orWhere('category', 'like', "%{$search}%");
+
+            });
+        }
+
+        $products = $products->get();
 
         return view('products.index', compact('products'));
     }

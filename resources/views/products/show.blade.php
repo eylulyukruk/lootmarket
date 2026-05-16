@@ -96,9 +96,86 @@
                 grid-template-columns: 1fr;
             }
         }
+        .navbar {
+            padding: 24px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffe4ec,
+                    #f4dbe2,
+                    #dbeaf1
+                );
+
+            backdrop-filter: blur(10px);
+
+            box-shadow:
+                0 10px 35px rgba(212,111,141,0.10);
+
+            border-bottom:
+                1px solid rgba(212,111,141,0.18);
+
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: 800;
+            color: #d46f8d;
+
+            display:flex;
+            align-items:center;
+
+            letter-spacing:-1px;
+        }
+
+        .logo img{
+            width:50px;
+            height:50px;
+            border-radius:14px;
+            margin-right:12px;
+        }
+
+        .nav-links a {
+            margin-left: 24px;
+            text-decoration: none;
+            color: #3a3a3a;
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
+<nav class="navbar">
+
+    <div class="logo">
+
+        <img src="/images/logo.png">
+
+        <span>LootMarket</span>
+
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/products">Products</a>
+
+        <a href="/cart">Cart</a>
+
+        @auth
+            <a href="/dashboard">Dashboard</a>
+        @else
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        @endauth
+
+    </div>
+
+</nav>
 
 <div class="container">
     <div class="detail-card">
