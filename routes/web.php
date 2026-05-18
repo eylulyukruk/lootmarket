@@ -5,6 +5,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use Inertia\Inertia;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,3 +46,12 @@ Route::get('/cart', [ProductController::class, 'cart']);
 Route::post('/cart/remove/{id}', [ProductController::class, 'removeFromCart']);
 Route::post('/cart/increase/{id}', [ProductController::class, 'increaseCart']);
 Route::post('/cart/decrease/{id}', [ProductController::class, 'decreaseCart']);
+Route::middleware(['auth', 'role:admin'])->group(function () {
+
+    Route::get('/admin', [AdminController::class, 'index']);
+
+    Route::get('/admin/products', [AdminProductController::class, 'index']);
+    Route::get('/admin/products/create', [AdminProductController::class, 'create']);
+});
+
+
