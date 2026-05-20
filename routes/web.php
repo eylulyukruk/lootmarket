@@ -20,12 +20,7 @@ use App\Http\Controllers\AdminProductController;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect('/products');
 });
 
 Route::get('/dashboard', function () {
@@ -52,6 +47,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/admin/products', [AdminProductController::class, 'index']);
     Route::get('/admin/products/create', [AdminProductController::class, 'create']);
+    Route::post('/admin/products/store', [AdminProductController::class, 'store']);
+    Route::delete('/admin/products/delete/{id}', [AdminProductController::class, 'destroy']);
+    Route::get('/admin/products/edit/{id}', [AdminProductController::class, 'edit']);
+    Route::put('/admin/products/update/{id}', [AdminProductController::class, 'update']);
 });
 
 

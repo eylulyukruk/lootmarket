@@ -214,8 +214,12 @@
             <tr>
                 <th>Image</th>
                 <th>Title</th>
+                <th>Game / Brand</th>
+                <th>Category</th>
+                <th>Type</th>
                 <th>Price</th>
                 <th>Stock</th>
+                <th>Actions</th>
             </tr>
 
             @foreach($products as $product)
@@ -229,16 +233,75 @@
                         >
                     </td>
 
+                    <td>{{ $product->name }}</td>
+                    <td>{{ $product->game }}</td>
+                    <td>{{ $product->category }}</td>
+                    <td>{{ $product->type }}</td>
+                    <td>${{ $product->price }}</td>
+                    <td>{{ $product->stock }}</td>
                     <td>
-                        {{ $product->name }}
-                    </td>
 
-                    <td>
-                        ${{ $product->price }}
-                    </td>
+                        <div
+                            style="
+            display:flex;
+            gap:10px;
+        "
+                        >
 
-                    <td>
-                        {{ $product->stock }}
+                            <a
+                                href="/admin/products/edit/{{ $product->id }}"
+
+                                style="
+                padding:10px 16px;
+                border-radius:12px;
+                text-decoration:none;
+                color:white;
+                font-weight:700;
+
+                background:
+                linear-gradient(
+                135deg,
+                #d8b4be,
+                #9fb7c9
+                );
+            "
+                            >
+                                Edit
+                            </a>
+
+                            <form action="/admin/products/delete/{{ $product->id }}" method="POST">
+
+                                @csrf
+                                @method('DELETE')
+
+                                <button
+                                    type="submit"
+
+                                    onclick="return confirm('Delete this product?')"
+
+                                    style="
+            padding:10px 16px;
+            border-radius:12px;
+            border:none;
+            color:white;
+            font-weight:700;
+            cursor:pointer;
+
+            background:
+            linear-gradient(
+            135deg,
+            #f29ca3,
+            #f07178
+            );
+        "
+                                >
+                                    Delete
+                                </button>
+
+                            </form>
+
+                        </div>
+
                     </td>
 
                 </tr>
