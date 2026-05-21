@@ -41,6 +41,11 @@ Route::get('/cart', [ProductController::class, 'cart']);
 Route::post('/cart/remove/{id}', [ProductController::class, 'removeFromCart']);
 Route::post('/cart/increase/{id}', [ProductController::class, 'increaseCart']);
 Route::post('/cart/decrease/{id}', [ProductController::class, 'decreaseCart']);
+
+Route::get('/checkout', [ProductController::class, 'checkout']);
+Route::post('/checkout/pay', [ProductController::class, 'pay']);
+
+Route::get('/order-success', [ProductController::class, 'orderSuccess']);
 Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/admin', [AdminController::class, 'index']);

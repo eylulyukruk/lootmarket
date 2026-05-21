@@ -59,7 +59,12 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        return view('products.show', compact('product'));
+        $relatedProducts = Product::where('category', $product->category)
+            ->where('id', '!=', $product->id)
+            ->take(4)
+            ->get();
+
+        return view('products.show', compact('product', 'relatedProducts'));
     }
 
     /**
@@ -151,5 +156,22 @@ class ProductController extends Controller
         }
 
         return redirect('/cart');
+    }
+    public function checkout()
+    {
+        $cart = session()->get('cart', []);
+
+        return view('products.checkout', compact('cart'));
+    }
+    public function pay()
+    {
+        session()->forget('cart');
+
+        return redirect('/order-success');
+    }
+
+    public function orderSuccess()
+    {
+        return view('products.order-success');
     }
 }
