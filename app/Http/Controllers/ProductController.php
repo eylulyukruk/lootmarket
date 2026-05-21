@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Order;
+use App\Models\OrderItem;
+use App\Models\Wishlist;
 class ProductController extends Controller
 {
     /**
@@ -32,8 +35,14 @@ class ProductController extends Controller
         }
 
         $products = $products->get();
+        $wishlistProductIds = [];
 
-        return view('products.index', compact('products'));
+        if (auth()->check()) {
+            $wishlistProductIds = Wishlist::where('user_id', auth()->id())
+                ->pluck('product_id')
+                ->toArray();
+        }
+        return view('products.index', compact('products', 'wishlistProductIds'));
     }
 
     /**
@@ -64,7 +73,15 @@ class ProductController extends Controller
             ->take(4)
             ->get();
 
-        return view('products.show', compact('product', 'relatedProducts'));
+        $isWishlisted = false;
+
+        if (auth()->check()) {
+            $isWishlisted = Wishlist::where('user_id', auth()->id())
+                ->where('product_id', $product->id)
+                ->exists();
+        }
+
+        return view('products.show', compact('product', 'relatedProducts', 'isWishlisted'));
     }
 
     /**
@@ -165,6 +182,42 @@ class ProductController extends Controller
     }
     public function pay()
     {
+        if (!auth()->check()) {
+            return redirect('/login');
+        }
+
+        $cart = session()->get('cart', []);
+
+        if (count($cart) === 0) {
+            return redirect('/cart');
+        }
+
+        $total = 0;
+
+        foreach ($cart as $item) {
+            $total += $item['price'] * $item['quantity'];
+        }
+
+        $tax = round($total * 0.08, 2);
+
+        $grandTotal = $total + $tax;
+
+        $order = Order::create([
+            'user_id' => auth()->id(),
+            'total' => $grandTotal,
+            'status' => 'Pending',
+        ]);
+
+        foreach ($cart as $item) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_name' => $item['name'],
+                'product_image' => $item['image'],
+                'price' => $item['price'],
+                'quantity' => $item['quantity'],
+            ]);
+        }
+
         session()->forget('cart');
 
         return redirect('/order-success');
@@ -173,5 +226,44 @@ class ProductController extends Controller
     public function orderSuccess()
     {
         return view('products.order-success');
+    }
+    public function myOrders()
+    {
+        $orders = Order::with('items')
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->get();
+
+        return view('products.my-orders', compact('orders'));
+    }
+    public function toggleWishlist($id)
+    {
+        if (!auth()->check()) {
+            return redirect('/login');
+        }
+
+        $wishlistItem = Wishlist::where('user_id', auth()->id())
+            ->where('product_id', $id)
+            ->first();
+
+        if ($wishlistItem) {
+            $wishlistItem->delete();
+        } else {
+            Wishlist::create([
+                'user_id' => auth()->id(),
+                'product_id' => $id,
+            ]);
+        }
+
+        return back();
+    }
+    public function wishlist()
+    {
+        $wishlistItems = Wishlist::with('product')
+            ->where('user_id', auth()->id())
+            ->latest()
+            ->get();
+
+        return view('products.wishlist', compact('wishlistItems'));
     }
 }

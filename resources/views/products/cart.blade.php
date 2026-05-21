@@ -413,24 +413,7 @@
 <div class="glow glow-1"></div>
 <div class="glow glow-2"></div>
 
-<nav class="navbar">
-    <div class="logo">
-        <img src="/images/logo.png">
-        <span>LootMarket</span>
-    </div>
-
-    <div class="nav-links">
-        <a href="/products">Products</a>
-        <a href="/cart">Cart</a>
-
-        @auth
-            <a href="/profile">Account</a>
-        @else
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-        @endauth
-    </div>
-</nav>
+@include('partials.navbar')
 
 <div class="page">
 

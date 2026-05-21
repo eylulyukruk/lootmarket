@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use Inertia\Inertia;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\AdminOrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,8 +45,15 @@ Route::post('/cart/decrease/{id}', [ProductController::class, 'decreaseCart']);
 
 Route::get('/checkout', [ProductController::class, 'checkout']);
 Route::post('/checkout/pay', [ProductController::class, 'pay']);
+Route::get('/my-orders', [ProductController::class, 'myOrders'])->middleware('auth');
 
 Route::get('/order-success', [ProductController::class, 'orderSuccess']);
+Route::post('/wishlist/toggle/{id}', [ProductController::class, 'toggleWishlist'])->middleware('auth');
+
+Route::get('/wishlist', [ProductController::class, 'wishlist'])->middleware('auth');
+
+
+
 Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/admin', [AdminController::class, 'index']);
@@ -56,6 +64,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::delete('/admin/products/delete/{id}', [AdminProductController::class, 'destroy']);
     Route::get('/admin/products/edit/{id}', [AdminProductController::class, 'edit']);
     Route::put('/admin/products/update/{id}', [AdminProductController::class, 'update']);
+    Route::get('/admin/orders', [AdminOrderController::class, 'index']);
+    Route::post('/admin/orders/update-status/{id}', [AdminOrderController::class, 'updateStatus']);
 });
 
 

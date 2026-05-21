@@ -102,7 +102,7 @@
         <a href="/admin">Dashboard</a>
         <a href="/admin/products">Products</a>
         <a href="#">Categories</a>
-        <a href="#">Orders</a>
+        <a href="/admin/orders">Orders</a>
         <a href="#">Users</a>
     </div>
 

@@ -804,6 +804,31 @@
 
             transform:translateY(-3px);
         }
+        .copy-message{
+            display:none;
+            margin:10px 0 18px;
+            padding:12px 16px;
+            width:fit-content;
+            border-radius:16px;
+
+            color:white;
+            font-weight:800;
+            font-size:14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff7eb6,
+                    #8f8dff
+                );
+
+            box-shadow:
+                0 12px 28px rgba(170,160,255,0.24);
+        }
+
+        .copy-message.show{
+            display:block;
+        }
     </style>
 </head>
 
@@ -830,24 +855,7 @@
     <div class="shooting-star"></div>
 
 </div>
-<nav class="navbar">
-    <div class="logo">
-        <img src="/images/logo.png">
-        <span>LootMarket</span>
-    </div>
-
-    <div class="nav-links">
-        <a href="/products">Products</a>
-        <a href="/cart">Cart</a>
-
-        @auth
-            <a href="/profile">Account</a>
-        @else
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-        @endauth
-    </div>
-</nav>
+@include('partials.navbar')
 
 <div class="page">
 
@@ -890,8 +898,27 @@
             </p>
 
             <div class="mini-actions">
-                <button class="round-btn">♡</button>
-                <button class="round-btn">↗</button>
+                <form action="/wishlist/toggle/{{ $product->id }}" method="POST">
+                    @csrf
+
+                    <button type="submit" class="round-btn">
+                        @if($isWishlisted)
+                            ♥
+                        @else
+                            ♡
+                        @endif
+                    </button>
+                </form>
+                <button
+                    type="button"
+                    class="round-btn"
+                    onclick="copyProductLink()"
+                >
+                    ↗
+                </button>
+            </div>
+            <div id="copy-message" class="copy-message">
+                Product link copied!
             </div>
 
             <div class="quantity-title">Quantity</div>
@@ -983,5 +1010,30 @@
     </div>
 
 </section>
+
+<script>
+    function copyProductLink() {
+        const link = window.location.href;
+        const message = document.getElementById('copy-message');
+
+        const tempInput = document.createElement('input');
+        tempInput.value = link;
+        document.body.appendChild(tempInput);
+
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999);
+
+        document.execCommand('copy');
+
+        document.body.removeChild(tempInput);
+
+        message.classList.add('show');
+
+        setTimeout(function () {
+            message.classList.remove('show');
+        }, 1800);
+    }
+</script>
+
 </body>
 </html>

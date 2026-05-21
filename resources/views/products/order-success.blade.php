@@ -191,24 +191,7 @@
 
 <body>
 
-<nav class="navbar">
-    <div class="logo">
-        <img src="/images/logo.png">
-        <span>LootMarket</span>
-    </div>
-
-    <div class="nav-links">
-        <a href="/products">Products</a>
-        <a href="/cart">Cart</a>
-
-        @auth
-            <a href="/profile">Account</a>
-        @else
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-        @endauth
-    </div>
-</nav>
+@include('partials.navbar')
 
 <div class="page">
 
@@ -240,7 +223,7 @@
                 Continue Shopping
             </a>
 
-            <a href="#" class="secondary-btn">
+            <a href="/my-orders" class="secondary-btn">
                 My Orders
             </a>
         </div>

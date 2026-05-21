@@ -901,9 +901,45 @@
                 opacity:0.4;
             }
         }
+        .card {
+            position: relative;
+        }
+
+        .wishlist-card-btn{
+            position:absolute;
+            top:18px;
+            right:18px;
+
+            width:44px;
+            height:44px;
+
+            border:none;
+            border-radius:50%;
+
+            background:rgba(255,255,255,0.85);
+
+            color:#f05fa5;
+
+            font-size:22px;
+
+            cursor:pointer;
+
+            box-shadow:
+                0 10px 25px rgba(0,0,0,0.10);
+
+            transition:0.25s;
+
+            z-index:5;
+        }
+
+        .wishlist-card-btn:hover{
+            transform:scale(1.12);
+            background:white;
+        }
     </style>
 </head>
 <body>
+@include('partials.navbar')
 <div class="cosmic-bg">
 
     <div class="planet-left"></div>
@@ -919,89 +955,7 @@
     <div class="star s5"></div>
 
 </div>
-<nav class="navbar">
-    <div class="logo">
-        <img src="/images/logo.png">
 
-        <span>LootMarket</span>
-    </div>
-    <div class="nav-links">
-        <a href="/products">Products</a>
-        <a href="/cart">Cart</a>
-
-        @auth
-            <div class="dropdown">
-
-                <a href="#">
-                    Account ▼
-                </a>
-
-                <div class="dropdown-menu">
-
-                    <div class="profile-top">
-
-                        <div class="profile-avatar">
-                            {{ strtoupper(substr(auth()->user()->name,0,1)) }}
-                        </div>
-
-                        <div>
-
-                            <div class="profile-name">
-                                {{ auth()->user()->name }}
-                            </div>
-
-                            <div class="profile-welcome">
-                                Welcome back!
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <a href="#" class="dropdown-item">
-
-                        <i class="fa-solid fa-cube"></i>
-
-                        My Orders
-
-                    </a>
-
-                    <a href="#" class="dropdown-item">
-
-                        <i class="fa-regular fa-heart"></i>
-
-                        Wishlist
-
-                    </a>
-
-                    <div class="dropdown-divider"></div>
-
-                    <form action="/logout" method="POST">
-
-                        @csrf
-
-                        <button
-                            type="submit"
-                            class="dropdown-item logout-button"
-                        >
-
-                            <i class="fa-solid fa-right-from-bracket"></i>
-
-                            Logout
-
-                        </button>
-
-                    </form>
-
-                </div>
-
-            </div>
-        @else
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-        @endauth
-    </div>
-</nav>
 
 <section class="hero">
     <h1>Soft Gaming Marketplace</h1>
@@ -1045,6 +999,19 @@
 <section class="products">
     @foreach($products as $product)
         <div class="card">
+            @auth
+                <form action="/wishlist/toggle/{{ $product->id }}" method="POST">
+                    @csrf
+
+                    <button type="submit" class="wishlist-card-btn">
+                        @if(in_array($product->id, $wishlistProductIds))
+                            ♥
+                        @else
+                            ♡
+                        @endif
+                    </button>
+                </form>
+            @endauth
             @if($product->image)
                 <img src="{{ $product->image }}" class="product-image" alt="{{ $product->name }}">
             @endif
