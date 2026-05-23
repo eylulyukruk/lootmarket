@@ -19,12 +19,19 @@ class AdminProductController extends Controller
     }
     public function store(Request $request)
     {
+        $imagePath = null;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+            $imagePath = '/storage/' . $imagePath;
+        }
+
         Product::create([
             'name' => $request->name,
             'game' => $request->game,
             'category' => $request->category,
             'type' => $request->type,
-            'image' => $request->image,
+            'image' => $imagePath,
             'price' => $request->price,
             'stock' => $request->stock,
             'description' => $request->description,

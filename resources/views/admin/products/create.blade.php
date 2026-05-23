@@ -175,7 +175,7 @@
 
         <h1>Add Product</h1>
 
-        <form action="/admin/products/store" method="POST">
+        <form action="/admin/products/store" method="POST" enctype="multipart/form-data">
             @csrf
 
             <input type="text" name="name" placeholder="Product Name">
@@ -186,7 +186,7 @@
 
             <input type="text" name="type" placeholder="Type">
 
-            <input type="text" name="image" placeholder="Image URL">
+            <input type="file" name="image" accept="image/*">
 
             <input type="number" step="0.01" name="price" placeholder="Price">
 

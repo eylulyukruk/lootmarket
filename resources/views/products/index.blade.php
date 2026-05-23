@@ -319,18 +319,34 @@
         }
 
         .card {
-            background: rgba(255,255,255,0.88);
-            border-radius: 24px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgb(232 217 246 / 0.89),
+                    rgb(250 226 247 / 0.89),
+                    rgb(228 255 252 / 0.84),
+                    rgb(238 221 248 / 0.85)
+                );
+
+            border-radius: 28px;
             padding: 24px;
-            box-shadow: 0 18px 40px rgba(157,180,192,0.13);
-            border: 1px solid rgba(212,111,141,0.22);
+
+            box-shadow:
+                0 20px 55px rgba(255,126,182,0.10),
+                0 14px 38px rgba(143,141,255,0.16);
+
+            border: 1px solid rgba(255,255,255,0.65);
+
             transition: 0.3s ease;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(16px);
+
             display: flex;
             flex-direction: column;
             width: 100%;
             box-sizing: border-box;
 
+            position: relative;
+            overflow: hidden;
         }
         .product-image {
             width: 100%;
@@ -339,12 +355,18 @@
             border-radius: 18px;
             margin-bottom: 18px;
             background: #f1e7e8;
+            box-shadow:
+                0 14px 32px rgba(0,0,0,0.10);
         }
 
         .card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 25px 55px rgba(212,111,141,0.18);
-            border-color: rgba(212,111,141,0.38);
+
+            box-shadow:
+                0 28px 70px rgba(255,126,182,0.18),
+                0 18px 48px rgba(143,141,255,0.22);
+
+            border-color: rgba(255,255,255,0.9);
         }
 
         .badge {
@@ -936,6 +958,134 @@
             transform:scale(1.12);
             background:white;
         }
+        .featured-categories{
+            padding:20px 60px 40px;
+            position:relative;
+            z-index:2;
+        }
+
+        .section-header{
+            text-align:center;
+            margin-bottom:30px;
+        }
+
+        .section-header h2{
+            font-size:38px;
+            margin:0 0 10px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ff5fa2,
+                    #8f8dff
+                );
+
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .section-header p{
+            color:#777;
+            font-size:16px;
+        }
+
+        .category-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(220px, 260px));
+            gap:24px;
+            justify-content:center;
+        }
+
+        .category-card{
+            text-decoration:none;
+            color:#2f2f3a;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgb(205 109 180 / 0.63),
+                    rgb(138 212 228 / 0.62),
+                    rgb(181 129 197 / 0.62)
+                );
+            backdrop-filter:blur(22px);
+
+            border:1px solid rgba(255,255,255,0.72);
+            border-radius:30px;
+
+            padding:28px 24px;
+
+            box-shadow:
+                0 20px 55px rgba(255,126,182,0.12),
+                0 12px 35px rgba(143,141,255,0.14);
+
+            transition:0.3s;
+        }
+
+        .category-card:hover{
+            transform:translateY(-8px);
+            box-shadow:
+                0 30px 75px rgba(160,170,255,0.24);
+        }
+
+        .category-icon{
+            width:58px;
+            height:58px;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            border-radius:20px;
+
+            font-size:28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgb(227 132 174 / 0.77),
+                    rgb(154 223 218 / 0.71)
+                );
+
+            margin-bottom:18px;
+        }
+
+        .category-card h3{
+            font-size:22px;
+            margin:0 0 10px;
+        }
+
+        .category-card p{
+            color:#777;
+            line-height:1.5;
+            margin:0;
+        }
+        .products-header{
+            text-align:center;
+            margin:20px 0 10px;
+            position:relative;
+            z-index:2;
+        }
+
+        .products-header h2{
+            font-size:38px;
+            margin:0 0 8px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ff5fa2,
+                    #8f8dff
+                );
+
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .products-header p{
+            color:#777;
+            font-size:16px;
+            margin:0;
+        }
     </style>
 </head>
 <body>
@@ -961,6 +1111,47 @@
     <h1>Soft Gaming Marketplace</h1>
     <p>Discover premium game skins, items, and digital collectibles in a calm and elegant marketplace.</p>
 </section>
+<section class="featured-categories">
+
+    <div class="section-header">
+        <h2>Explore Loot Categories</h2>
+        <p>Find digital codes, gaming setup upgrades, and streamer essentials.</p>
+    </div>
+
+    <div class="category-grid">
+
+        <a href="/products?category=Game Currency" class="category-card">
+            <div class="category-icon">🎮</div>
+            <h3>Game Currency</h3>
+            <p>RP, VP, V-Bucks and more.</p>
+        </a>
+
+        <a href="/products?category=Gift Cards" class="category-card">
+            <div class="category-icon">💳</div>
+            <h3>Gift Cards</h3>
+            <p>Steam, Apple, Xbox and Game Pass.</p>
+        </a>
+
+        <a href="/products?category=Gaming Setup" class="category-card">
+            <div class="category-icon">🖥️</div>
+            <h3>Gaming Setup</h3>
+            <p>Monitors, mice, keyboards and chairs.</p>
+        </a>
+        <a href="/products?category=Setup Decor" class="category-card">
+            <div class="category-icon">✨</div>
+            <h3>Setup Decor</h3>
+            <p>Cloud lamps, neon lights, desk mats and cozy room details.</p>
+        </a>
+
+        <a href="/products?category=Streaming Gear" class="category-card">
+            <div class="category-icon">🎙️</div>
+            <h3>Streaming Gear</h3>
+            <p>Microphones, webcams and creator tools.</p>
+        </a>
+
+    </div>
+
+</section>
 <form action="/products" method="GET" style="text-align:center; margin: 10px 0 25px;">
 
     <input
@@ -984,16 +1175,44 @@
     </button>
 
 </form>
-<div style="text-align:center; margin: 10px 0 20px;">
-    <a href="/products" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">All</a>
+<div style="text-align:center; margin: 10px 0 35px;">
 
-    <a href="/products?category=Skins" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">Skins</a>
+    <a href="/products" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">
+        All
+    </a>
 
-    <a href="/products?category=Knives" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">Knives</a>
+    <a href="/products?category=Skins" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">
+        Skins
+    </a>
 
-    <a href="/products?category=Gaming Setup" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">Gaming Setup</a>
+    <a href="/products?category=Knives" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">
+        Knives
+    </a>
 
-    <a href="/products?category=Setup" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">Setup</a>
+    <a href="/products?category=Gift Cards" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">
+        Gift Cards
+    </a>
+
+    <a href="/products?category=Game Currency" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">
+        Game Currency
+    </a>
+
+    <a href="/products?category=Gaming Setup" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">
+        Gaming Setup
+    </a>
+    <a href="/products?category=Setup Decor" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">
+        Setup Decor
+    </a>
+
+    <a href="/products?category=Streaming Gear" class="button" style="text-decoration:none; display:inline-block; width:auto; margin:6px;">
+        Streaming Gear
+    </a>
+
+
+</div>
+<div class="products-header">
+    <h2>Trending Products</h2>
+    <p>Popular skins, codes, and gaming gear selected for you.</p>
 </div>
 
 <section class="products">
