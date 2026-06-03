@@ -28,13 +28,11 @@
         }
 
         .admin-logo{
-            font-size:25px;
+            font-size:26px;
             font-weight:800;
             color:#d46f8d;
             display:flex;
             align-items:center;
-            justify-content:center;
-            gap:12px;
             margin-bottom:50px;
             text-decoration:none;
             background:transparent;
@@ -43,11 +41,12 @@
         }
 
         .admin-logo img{
-            width:38px;
-            height:38px;
+            width:42px;
+            height:42px;
             border-radius:14px;
-            margin:0;
+            margin-right:14px;
         }
+
 
         .sidebar a{
             display:block;
@@ -67,14 +66,32 @@
 
         .sidebar a.admin-logo{
             display:flex;
-            background:transparent;
+            align-items:center;
+            justify-content:center;
+            gap:12px;
+
             padding:0;
             margin-bottom:50px;
+
+            background:transparent;
+            border-radius:0;
+
+            text-decoration:none;
+            color:#d46f8d;
+
+            transform:none;
         }
 
         .sidebar a.admin-logo:hover{
-            transform:none;
             background:transparent;
+            transform:none;
+        }
+
+        .sidebar a.admin-logo img{
+            width:42px;
+            height:42px;
+            border-radius:14px;
+            margin:0;
         }
 
         .content{
@@ -171,7 +188,7 @@
 
         <a href="/admin">Dashboard</a>
         <a href="/admin/products">Products</a>
-        <a href="#">Categories</a>
+        <a href="/admin/categories">Categories</a>
         <a href="/admin/orders">Orders</a>
         <a href="/admin/users">Users</a>
 

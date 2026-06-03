@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\AdminCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +69,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/orders', [AdminOrderController::class, 'index']);
     Route::post('/admin/orders/update-status/{id}', [AdminOrderController::class, 'updateStatus']);
     Route::get('/admin/users', [AdminUserController::class, 'index']);
+    Route::get('/admin/categories', [AdminCategoryController::class, 'index']);
 });
 
 

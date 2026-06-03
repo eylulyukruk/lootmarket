@@ -7,9 +7,15 @@ use Illuminate\Http\Request;
 
 class AdminProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::latest()->get();
+        $query = Product::query();
+
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
+        }
+
+        $products = $query->latest()->get();
 
         return view('admin.products.index', compact('products'));
     }
