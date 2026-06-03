@@ -44,22 +44,35 @@
 
         }
 
-        .logo{
+        .admin-logo{
             font-size:26px;
             font-weight:800;
             color:#d46f8d;
-
             display:flex;
             align-items:center;
-
             margin-bottom:50px;
+            text-decoration:none;
+            background:transparent;
+            padding:0;
+            border-radius:0;
         }
 
-        .logo img{
+        .admin-logo img{
             width:42px;
             height:42px;
             border-radius:14px;
             margin-right:14px;
+        }
+
+        .sidebar .admin-logo{
+            background:transparent;
+            padding:0;
+            margin-bottom:50px;
+        }
+
+        .sidebar .admin-logo:hover{
+            transform:none;
+            background:transparent;
         }
 
         .sidebar a{
@@ -145,6 +158,42 @@
                     #9fb7c9
                 );
         }
+        .sidebar a.admin-logo{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:12px;
+
+            padding:0;
+            margin-bottom:50px;
+
+            background:transparent;
+            border-radius:0;
+
+            text-decoration:none;
+            color:#d46f8d;
+
+            transform:none;
+        }
+
+        .sidebar a.admin-logo:hover{
+            background:transparent;
+            transform:none;
+        }
+
+        .sidebar a.admin-logo img{
+            width:42px;
+            height:42px;
+            border-radius:14px;
+            margin:0;
+        }
+
+        .sidebar a.admin-logo span{
+            font-size:26px;
+            font-weight:800;
+            color:#d46f8d;
+            letter-spacing:-0.5px;
+        }
 
     </style>
 
@@ -155,19 +204,16 @@
 
     <div class="sidebar">
 
-        <div class="logo">
-
+        <a href="/admin" class="admin-logo">
             <img src="/images/logo.png">
-
             <span>LootMarket</span>
-
-        </div>
+        </a>
 
         <a href="/admin">Dashboard</a>
         <a href="/admin/products">Products</a>
         <a href="#">Categories</a>
         <a href="/admin/orders">Orders</a>
-        <a href="#">Users</a>
+        <a href="/admin/users">Users</a>
 
     </div>
 

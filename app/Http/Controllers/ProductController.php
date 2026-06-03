@@ -12,29 +12,39 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $category = request('category');
-        $search = request('search');
+        $query = Product::query();
 
-        $products = Product::query();
-
-        if ($category) {
-            $products->where('category', $category);
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%')
+                ->orWhere('game', 'like', '%' . $request->search . '%')
+                ->orWhere('category', 'like', '%' . $request->search . '%')
+                ->orWhere('type', 'like', '%' . $request->search . '%');
         }
 
-        if ($search) {
-            $products->where(function ($query) use ($search) {
-
-                $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('game', 'like', "%{$search}%")
-                    ->orWhere('type', 'like', "%{$search}%")
-                    ->orWhere('category', 'like', "%{$search}%");
-
-            });
+        if ($request->filled('category')) {
+            $query->where('category', $request->category);
         }
 
-        $products = $products->get();
+        if ($request->filled('min_price')) {
+            $query->where('price', '>=', $request->min_price);
+        }
+
+        if ($request->filled('max_price')) {
+            $query->where('price', '<=', $request->max_price);
+        }
+
+        if ($request->sort == 'cheapest') {
+            $query->orderBy('price', 'asc');
+        } elseif ($request->sort == 'expensive') {
+            $query->orderBy('price', 'desc');
+        } else {
+            $query->latest();
+        }
+
+        $products = $query->get();
+
         $wishlistProductIds = [];
 
         if (auth()->check()) {
@@ -42,6 +52,7 @@ class ProductController extends Controller
                 ->pluck('product_id')
                 ->toArray();
         }
+
         return view('products.index', compact('products', 'wishlistProductIds'));
     }
 

@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminOrderController;
+use App\Http\Controllers\AdminUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,6 +67,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/admin/products/update/{id}', [AdminProductController::class, 'update']);
     Route::get('/admin/orders', [AdminOrderController::class, 'index']);
     Route::post('/admin/orders/update-status/{id}', [AdminOrderController::class, 'updateStatus']);
+    Route::get('/admin/users', [AdminUserController::class, 'index']);
 });
 
 

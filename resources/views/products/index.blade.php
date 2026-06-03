@@ -1086,6 +1086,223 @@
             font-size:16px;
             margin:0;
         }
+        .filter-panel{
+            max-width:1320px;
+            margin:10px auto 28px;
+            padding:18px;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            flex-wrap:wrap;
+            gap:12px;
+
+            border-radius:30px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,225,240,0.72),
+                    rgba(242,232,255,0.68),
+                    rgba(224,240,255,0.68)
+                );
+
+            border:1px solid rgba(255,255,255,0.7);
+
+            box-shadow:
+                0 20px 55px rgba(255,126,182,0.10),
+                0 12px 35px rgba(143,141,255,0.14);
+
+            backdrop-filter:blur(18px);
+
+            position:relative;
+            z-index:20;
+        }
+
+        .filter-input{
+            min-width:145px;
+            padding:13px 14px;
+
+            border:none;
+            outline:none;
+
+            border-radius:18px;
+
+            background:rgba(255,255,255,0.72);
+
+            color:#3a3a3a;
+
+            font-size:15px;
+            font-weight:600;
+
+            box-shadow:
+                inset 0 0 0 1px rgba(255,255,255,0.65);
+        }
+
+        .filter-input.small{
+            min-width:105px;
+            width:105px;
+        }
+
+        .filter-input:focus{
+            box-shadow:
+                0 0 0 4px rgba(255,126,182,0.14);
+        }
+
+        .filter-submit,
+        .filter-reset{
+            padding:13px 20px;
+
+            border:none;
+            border-radius:18px;
+
+            text-decoration:none;
+
+            color:white;
+            font-size:15px;
+            font-weight:900;
+
+            cursor:pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff7eb6,
+                    #8f8dff
+                );
+
+            box-shadow:
+                0 12px 28px rgba(170,160,255,0.22);
+
+            transition:0.25s;
+        }
+
+        .filter-reset{
+            background:
+                linear-gradient(
+                    135deg,
+                    #d8b4be,
+                    #9fb7c9
+                );
+        }
+
+        .filter-submit:hover,
+        .filter-reset:hover{
+            transform:translateY(-3px);
+        }
+        .custom-filter-dropdown{
+            position:relative;
+        }
+
+        .custom-filter-button{
+            min-width:165px;
+            padding:13px 15px;
+
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:12px;
+
+            border:none;
+            border-radius:18px;
+
+            background:rgba(255,255,255,0.72);
+
+            color:#3a3a3a;
+
+            font-size:15px;
+            font-weight:800;
+
+            cursor:pointer;
+
+            box-shadow:
+                inset 0 0 0 1px rgba(255,255,255,0.65);
+
+            transition:0.25s;
+        }
+
+        .custom-filter-button:hover{
+            box-shadow:
+                0 0 0 4px rgba(255,126,182,0.14);
+        }
+
+        .custom-arrow{
+            color:#d46f8d;
+            font-size:18px;
+        }
+
+        .custom-filter-menu{
+            max-height:220px;
+            overflow-y:auto;
+            z-index:999;
+            display:none;
+
+            position:absolute;
+            top:54px;
+            left:0;
+
+            width:220px;
+
+            padding:10px;
+
+            border-radius:22px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgb(255 218 236 / 0.98),
+                    rgb(216 228 250 / 0.98)
+                );
+
+            backdrop-filter:blur(18px);
+
+            border:1px solid rgba(255,255,255,0.8);
+
+            box-shadow:
+                0 18px 45px rgba(160,170,255,0.24);
+
+        }
+
+        .custom-filter-menu.show{
+            display:block;
+        }
+
+        .custom-filter-menu button{
+            width:100%;
+
+            padding:13px 15px;
+
+            border:none;
+            border-radius:15px;
+
+            background:transparent;
+
+            text-align:left;
+
+            color:#3f3f52;
+
+            font-size:15px;
+            font-weight:800;
+
+            cursor:pointer;
+
+            transition:0.22s;
+        }
+
+        .custom-filter-menu button:hover{
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,126,182,0.22),
+                    rgba(143,141,255,0.18)
+                );
+
+            color:#d46f8d;
+        }
+        .custom-filter-menu{
+            max-height:260px;
+            overflow-y:auto;
+        }
     </style>
 </head>
 <body>
@@ -1152,27 +1369,147 @@
     </div>
 
 </section>
-<form action="/products" method="GET" style="text-align:center; margin: 10px 0 25px;">
+<form action="/products" method="GET" class="filter-panel">
 
     <input
         type="text"
         name="search"
         placeholder="Search products..."
         value="{{ request('search') }}"
-        style="
-            width: 320px;
-            padding: 14px 18px;
-            border-radius: 18px;
-            border: 1px solid rgba(216, 180, 182, 0.6);
-            outline: none;
-            font-size: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.05);
-        "
+        class="filter-input"
     >
 
-    <button type="submit" class="button" style="width:auto; margin-left:8px;">
-        Search
+    <input
+        type="hidden"
+        name="category"
+        id="categoryInput"
+        value="{{ request('category') }}"
+    >
+
+    <div class="custom-filter-dropdown">
+
+        <button
+            type="button"
+            class="custom-filter-button"
+            onclick="toggleCategoryDropdown()"
+        >
+        <span id="categoryLabel">
+            @if(request('category'))
+                {{ request('category') }}
+            @else
+                All Categories
+            @endif
+        </span>
+
+            <span class="custom-arrow">⌄</span>
+        </button>
+
+        <div class="custom-filter-menu" id="categoryMenu">
+
+            <button type="button" onclick="selectCategory('', 'All Categories')">
+                All Categories
+            </button>
+
+            <button type="button" onclick="selectCategory('Skins', 'Skins')">
+                Skins
+            </button>
+
+            <button type="button" onclick="selectCategory('Knives', 'Knives')">
+                Knives
+            </button>
+
+            <button type="button" onclick="selectCategory('Gift Cards', 'Gift Cards')">
+                Gift Cards
+            </button>
+
+            <button type="button" onclick="selectCategory('Game Currency', 'Game Currency')">
+                Game Currency
+            </button>
+
+            <button type="button" onclick="selectCategory('Gaming Setup', 'Gaming Setup')">
+                Gaming Setup
+            </button>
+
+            <button type="button" onclick="selectCategory('Setup Decor', 'Setup Decor')">
+                Setup Decor
+            </button>
+
+            <button type="button" onclick="selectCategory('Streaming Gear', 'Streaming Gear')">
+                Streaming Gear
+            </button>
+
+        </div>
+
+    </div>
+
+    <input
+        type="number"
+        name="min_price"
+        placeholder="Min price"
+        value="{{ request('min_price') }}"
+        class="filter-input small"
+    >
+
+    <input
+        type="number"
+        name="max_price"
+        placeholder="Max price"
+        value="{{ request('max_price') }}"
+        class="filter-input small"
+    >
+
+    <input
+        type="hidden"
+        name="sort"
+        id="sortInput"
+        value="{{ request('sort') }}"
+    >
+
+    <div class="custom-filter-dropdown">
+
+        <button
+            type="button"
+            class="custom-filter-button"
+            onclick="toggleSortDropdown()"
+        >
+        <span id="sortLabel">
+            @if(request('sort') == 'cheapest')
+                Cheapest
+            @elseif(request('sort') == 'expensive')
+                Most Expensive
+            @else
+                Newest
+            @endif
+        </span>
+
+            <span class="custom-arrow">⌄</span>
+        </button>
+
+        <div class="custom-filter-menu" id="sortMenu">
+
+            <button type="button" onclick="selectSort('', 'Newest')">
+                Newest
+            </button>
+
+            <button type="button" onclick="selectSort('cheapest', 'Cheapest')">
+                Cheapest
+            </button>
+
+            <button type="button" onclick="selectSort('expensive', 'Most Expensive')">
+                Most Expensive
+            </button>
+
+        </div>
+
+    </div>
+
+    <button type="submit" class="filter-submit">
+        Filter
     </button>
+
+    <a href="/products" class="filter-reset">
+        Reset
+    </a>
 
 </form>
 <div style="text-align:center; margin: 10px 0 35px;">
@@ -1257,6 +1594,48 @@
         </div>
     @endforeach
 </section>
+<script>
+    function toggleSortDropdown() {
+        document.getElementById('sortMenu').classList.toggle('show');
 
+        const categoryMenu = document.getElementById('categoryMenu');
+
+        if (categoryMenu) {
+            categoryMenu.classList.remove('show');
+        }
+    }
+
+    function selectSort(value, label) {
+        document.getElementById('sortInput').value = value;
+        document.getElementById('sortLabel').innerText = label;
+        document.getElementById('sortMenu').classList.remove('show');
+    }
+
+    function toggleCategoryDropdown() {
+        document.getElementById('categoryMenu').classList.toggle('show');
+
+        const sortMenu = document.getElementById('sortMenu');
+
+        if (sortMenu) {
+            sortMenu.classList.remove('show');
+        }
+    }
+
+    function selectCategory(value, label) {
+        document.getElementById('categoryInput').value = value;
+        document.getElementById('categoryLabel').innerText = label;
+        document.getElementById('categoryMenu').classList.remove('show');
+    }
+
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.custom-filter-dropdown')) {
+            document
+                .querySelectorAll('.custom-filter-menu')
+                .forEach(function(menu) {
+                    menu.classList.remove('show');
+                });
+        }
+    });
+</script>
 </body>
 </html>
