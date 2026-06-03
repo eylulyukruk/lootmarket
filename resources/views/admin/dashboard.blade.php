@@ -333,7 +333,97 @@
                 );
         }
 
-        .empty-box{
+
+        .admin-profile-box{
+            margin-top:34px;
+            padding:18px;
+
+            display:flex;
+            align-items:center;
+            gap:14px;
+
+            border-radius:22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.58),
+                    rgba(235,242,255,0.58)
+                );
+
+            border:1px solid rgba(255,255,255,0.65);
+        }
+
+        .admin-avatar{
+            width:44px;
+            height:44px;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            border-radius:50%;
+
+            color:white;
+            font-weight:900;
+            font-size:19px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff7eb6,
+                    #8f8dff
+                );
+        }
+
+        .admin-profile-box strong{
+            display:block;
+            color:#2f2f3a;
+            font-size:15px;
+        }
+
+        .admin-profile-box span{
+            display:block;
+            color:#777;
+            font-size:13px;
+            margin-top:3px;
+        }
+
+        .admin-logout-form{
+            margin:14px 0 0;
+        }
+
+        .admin-logout-btn{
+            width:100%;
+
+            padding:15px 20px;
+
+            border:none;
+            border-radius:18px;
+
+            color:white;
+            font-weight:900;
+            font-size:15px;
+
+            cursor:pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff8aa5,
+                    #f05f7f
+                );
+
+            box-shadow:
+                0 12px 28px rgba(240,95,127,0.18);
+
+            transition:0.25s;
+        }
+
+        .admin-logout-btn:hover{
+            transform:translateY(-3px);
+        }
+
         .empty-box{
             padding:40px;
             border-radius:24px;
@@ -342,8 +432,178 @@
             text-align:center;
         }
 
-    </style>
+        .admin-profile-box{
+            margin-top:34px;
+            padding:18px;
 
+            display:flex;
+            align-items:center;
+            gap:14px;
+
+            border-radius:22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.58),
+                    rgba(235,242,255,0.58)
+                );
+
+            border:1px solid rgba(255,255,255,0.65);
+        }
+
+        .admin-avatar{
+            width:44px;
+            height:44px;
+
+            min-width:44px;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            border-radius:50%;
+
+            color:white;
+            font-weight:900;
+            font-size:19px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff7eb6,
+                    #8f8dff
+                );
+        }
+
+        .admin-profile-box strong{
+            display:block;
+            color:#2f2f3a;
+            font-size:15px;
+        }
+
+        .admin-profile-box span{
+            display:block;
+            color:#777;
+            font-size:13px;
+            margin-top:3px;
+        }
+
+        .admin-logout-form{
+            margin:14px 0 0;
+        }
+
+        .admin-logout-btn{
+            width:100%;
+
+            padding:15px 20px;
+
+            border:none;
+            border-radius:18px;
+
+            color:white;
+            font-weight:900;
+            font-size:15px;
+
+            cursor:pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff8aa5,
+                    #f05f7f
+                );
+
+            box-shadow:
+                0 12px 28px rgba(240,95,127,0.18);
+
+            transition:0.25s;
+        }
+
+        .admin-logout-btn:hover{
+            transform:translateY(-3px);
+        }
+        .sales-section{
+            margin-top:20px;
+        }
+
+        .section-title h2{
+            font-size:34px;
+            margin:0 0 22px;
+            color:#2f2f3a;
+        }
+
+        .sales-chart-card{
+            padding:32px;
+
+            border-radius:32px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgb(255 225 238 / 0.92),
+                    rgb(246 237 255 / 0.92),
+                    rgb(220 234 253 / 0.92)
+                );
+
+            border:1px solid rgba(255,255,255,0.75);
+
+            box-shadow:
+                0 22px 55px rgba(160,170,255,0.14);
+        }
+
+        .sales-chart-header{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:20px;
+            margin-bottom:26px;
+        }
+
+        .sales-chart-header h3{
+            margin:0 0 7px;
+            font-size:23px;
+            color:#2f2f3a;
+        }
+
+        .sales-chart-header p{
+            margin:0;
+            color:#777;
+            font-size:15px;
+        }
+
+        .sales-chart-header strong{
+            font-size:34px;
+            font-weight:900;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ff5fa2,
+                    #8f8dff
+                );
+
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .chart-wrapper{
+            height:330px;
+            padding:18px;
+
+            border-radius:24px;
+
+            background:rgba(255,255,255,0.48);
+
+            border:1px solid rgba(255,255,255,0.65);
+        }
+
+        #salesChart{
+            width:100%;
+            height:100%;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -361,6 +621,24 @@
         <a href="/admin/categories">Categories</a>
         <a href="/admin/orders">Orders</a>
         <a href="/admin/users">Users</a>
+        <div class="admin-profile-box">
+            <div class="admin-avatar">
+                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+            </div>
+
+            <div>
+                <strong>{{ auth()->user()->name }}</strong>
+                <span>Admin Panel</span>
+            </div>
+        </div>
+
+        <form action="/logout" method="POST" class="admin-logout-form">
+            @csrf
+
+            <button type="submit" class="admin-logout-btn">
+                Logout
+            </button>
+        </form>
 
     </div>
 
@@ -414,56 +692,93 @@
 
         </div>
 
-        <div class="recent-section">
+        <div class="sales-section">
 
             <div class="section-title">
-                <h2>Recent Orders</h2>
+                <h2>Sales Value</h2>
             </div>
 
-            @if($recentOrders->count() > 0)
+            <div class="sales-chart-card">
 
-                <div class="recent-orders">
+                <div class="sales-chart-header">
+                    <div>
+                        <h3>Monthly Revenue</h3>
+                        <p>Revenue trend based on customer orders.</p>
+                    </div>
 
-                    @foreach($recentOrders as $order)
-
-                        <div class="recent-order-card">
-
-                            <div>
-                                <strong>Order #LM-{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}</strong>
-
-                                <p>
-                                    {{ $order->user->name ?? 'Unknown User' }}
-                                    —
-                                    {{ $order->created_at->format('d M Y, H:i') }}
-                                </p>
-                            </div>
-
-                            <div class="recent-right">
-                        <span class="status-badge">
-                            {{ $order->status }}
-                        </span>
-
-                                <strong>${{ $order->total }}</strong>
-                            </div>
-
-                        </div>
-
-                    @endforeach
-
+                    <strong>${{ number_format($totalRevenue, 2) }}</strong>
                 </div>
 
-            @else
-
-                <div class="empty-box">
-                    No recent orders yet.
+                <div class="chart-wrapper">
+                    <canvas id="salesChart"></canvas>
                 </div>
 
-            @endif
+            </div>
 
         </div>
     </div>
 
 </div>
+<script>
+    const salesCtx = document.getElementById('salesChart');
 
+    new Chart(salesCtx, {
+        type: 'line',
+        data: {
+            labels: @json($monthLabels),
+            datasets: [{
+                label: 'Sales Value',
+                data: @json($salesValues),
+                tension: 0.25,
+                fill: true,
+                borderWidth: 4,
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                borderColor: '#ff5fa2',
+                backgroundColor: 'rgba(255, 126, 182, 0.18)',
+                pointBackgroundColor: '#8f8dff',
+                pointBorderColor: '#ffffff',
+                pointBorderWidth: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return 'Sales: $' + context.raw;
+                        }
+                    }
+                }
+            },
+
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return '$' + value;
+                        }
+                    },
+                    grid: {
+                        color: 'rgba(160,170,255,0.18)'
+                    }
+                },
+
+                x: {
+                    grid: {
+                        display: false
+                    }
+                }
+            }
+        }
+    });
+</script>
 </body>
 </html>

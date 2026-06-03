@@ -138,6 +138,95 @@
             color:#d46f8d;
             letter-spacing:-0.5px;
         }
+        .admin-profile-box{
+            margin-top:34px;
+            padding:18px;
+
+            display:flex;
+            align-items:center;
+            gap:14px;
+
+            border-radius:22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.58),
+                    rgba(235,242,255,0.58)
+                );
+
+            border:1px solid rgba(255,255,255,0.65);
+        }
+
+        .admin-avatar{
+            width:44px;
+            height:44px;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            border-radius:50%;
+
+            color:white;
+            font-weight:900;
+            font-size:19px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff7eb6,
+                    #8f8dff
+                );
+        }
+
+        .admin-profile-box strong{
+            display:block;
+            color:#2f2f3a;
+            font-size:15px;
+        }
+
+        .admin-profile-box span{
+            display:block;
+            color:#777;
+            font-size:13px;
+            margin-top:3px;
+        }
+
+        .admin-logout-form{
+            margin:14px 0 0;
+        }
+
+        .admin-logout-btn{
+            width:100%;
+
+            padding:15px 20px;
+
+            border:none;
+            border-radius:18px;
+
+            color:white;
+            font-weight:900;
+            font-size:15px;
+
+            cursor:pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff8aa5,
+                    #f05f7f
+                );
+
+            box-shadow:
+                0 12px 28px rgba(240,95,127,0.18);
+
+            transition:0.25s;
+        }
+
+        .admin-logout-btn:hover{
+            transform:translateY(-3px);
+        }
     </style>
 </head>
 <body>
@@ -155,6 +244,24 @@
         <a href="/admin/categories">Categories</a>
         <a href="/admin/orders">Orders</a>
         <a href="/admin/users">Users</a>
+        <div class="admin-profile-box">
+            <div class="admin-avatar">
+                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+            </div>
+
+            <div>
+                <strong>{{ auth()->user()->name }}</strong>
+                <span>Admin Panel</span>
+            </div>
+        </div>
+
+        <form action="/logout" method="POST" class="admin-logout-form">
+            @csrf
+
+            <button type="submit" class="admin-logout-btn">
+                Logout
+            </button>
+        </form>
     </div>
 
     <div class="content">

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\User;
 use App\Models\Order;
-
+use Illuminate\Support\Facades\DB;
 class AdminController extends Controller
 {
     public function index()
@@ -20,10 +20,21 @@ class AdminController extends Controller
 
         $pendingOrders = Order::where('status', 'Pending')->count();
 
-        $recentOrders = Order::with('user')
-            ->latest()
-            ->take(5)
+        $salesByMonth = Order::select(
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('SUM(total) as revenue')
+        )
+            ->groupBy(DB::raw('MONTH(created_at)'))
+            ->orderBy(DB::raw('MONTH(created_at)'))
             ->get();
+
+        $monthLabels = [];
+        $salesValues = [];
+
+        foreach ($salesByMonth as $sale) {
+            $monthLabels[] = date('M', mktime(0, 0, 0, $sale->month, 1));
+            $salesValues[] = $sale->revenue;
+        }
 
         return view('admin.dashboard', compact(
             'totalProducts',
@@ -31,7 +42,8 @@ class AdminController extends Controller
             'totalUsers',
             'totalRevenue',
             'pendingOrders',
-            'recentOrders'
+            'monthLabels',
+            'salesValues'
         ));
     }
 }
