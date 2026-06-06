@@ -1,121 +1,196 @@
 import { useState } from 'react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
-import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 
-export default function Authenticated({ user, header, children }) {
-    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+export default function AuthenticatedLayout({ user, header, children }) {
+    const [accountOpen, setAccountOpen] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <nav className="bg-white border-b border-gray-100">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
-                        <div className="flex">
-                            <div className="shrink-0 flex items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
-                                </Link>
-                            </div>
+        <div className="min-h-screen">
+            <nav
+                className="sticky top-0 z-50 border-b border-pink-200/40 backdrop-blur-xl"
+                style={{
+                    background:
+                        'linear-gradient(90deg, rgba(255,235,245,0.94), rgba(235,242,255,0.94))',
+                }}
+            >
+                <div className="mx-auto flex max-w-[1500px] items-center justify-between px-6 py-5 lg:px-14">
+                    <Link
+                        href="/products"
+                        className="flex items-center gap-3 text-decoration-none"
+                    >
+                        <img
+                            src="/images/logo.png"
+                            alt="LootMarket"
+                            className="h-12 w-12 rounded-2xl object-cover"
+                        />
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
-                            </div>
-                        </div>
+                        <span className="text-3xl font-black text-[#d46f8d]">
+                            LootMarket
+                        </span>
+                    </Link>
 
-                        <div className="hidden sm:flex sm:items-center sm:ms-6">
-                            <div className="ms-3 relative">
-                                <Dropdown>
-                                    <Dropdown.Trigger>
-                                        <span className="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                                            >
-                                                {user.name}
+                    <div className="hidden items-center gap-8 md:flex">
+                        <Link
+                            href="/products"
+                            className="font-bold text-gray-800 transition hover:text-pink-500"
+                        >
+                            Products
+                        </Link>
 
-                                                <svg
-                                                    className="ms-2 -me-0.5 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </Dropdown.Trigger>
+                        <a
+                            href="/cart"
+                            className="font-bold text-gray-800 transition hover:text-pink-500"
+                        >
+                            Cart
+                        </a>
 
-                                    <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
-                                        <Dropdown.Link href={route('logout')} method="post" as="button">
-                                            Log Out
-                                        </Dropdown.Link>
-                                    </Dropdown.Content>
-                                </Dropdown>
-                            </div>
-                        </div>
-
-                        <div className="-me-2 flex items-center sm:hidden">
+                        <div className="relative">
                             <button
-                                onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                                type="button"
+                                onClick={() => setAccountOpen((current) => !current)}
+                                className="flex items-center gap-2 border-none bg-transparent font-bold text-gray-800 transition hover:text-pink-500"
                             >
-                                <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                    <path
-                                        className={!showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        className={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
+                                Account
+                                <span
+                                    className={`text-sm transition-transform ${
+                                        accountOpen ? 'rotate-180' : ''
+                                    }`}
+                                >
+                                    ▼
+                                </span>
                             </button>
+
+                            {accountOpen && (
+                                <div className="absolute right-0 top-12 w-64 overflow-hidden rounded-3xl border border-white/80 bg-white/95 p-3 shadow-[0_20px_55px_rgba(160,170,255,0.24)] backdrop-blur-xl">
+                                    <div className="mb-2 border-b border-pink-100 px-4 py-3">
+                                        <strong className="block text-gray-800">
+                                            {user.name}
+                                        </strong>
+
+                                        <span className="mt-1 block text-sm text-gray-500">
+                                            {user.email}
+                                        </span>
+                                    </div>
+
+                                    <a
+                                        href="/my-orders"
+                                        className="flex items-center gap-3 rounded-2xl px-4 py-3 font-bold text-gray-700 transition hover:bg-pink-50 hover:text-pink-500"
+                                    >
+                                        <span>📦</span>
+                                        My Orders
+                                    </a>
+
+                                    <a
+                                        href="/wishlist"
+                                        className="flex items-center gap-3 rounded-2xl px-4 py-3 font-bold text-gray-700 transition hover:bg-pink-50 hover:text-pink-500"
+                                    >
+                                        <span>♡</span>
+                                        Wishlist
+                                    </a>
+
+                                    <a
+                                        href="/support-messages"
+                                        className="flex items-center gap-3 rounded-2xl px-4 py-3 font-bold text-gray-700 transition hover:bg-pink-50 hover:text-pink-500"
+                                    >
+                                        <span>💬</span>
+                                        Support Messages
+                                    </a>
+
+                                    <Link
+                                        href="/profile"
+                                        className="flex items-center gap-3 rounded-2xl bg-gradient-to-r from-pink-100/80 to-indigo-100/80 px-4 py-3 font-bold text-pink-600"
+                                    >
+                                        <span>⚙️</span>
+                                        Account Settings
+                                    </Link>
+
+                                    <Link
+                                        href={route('logout')}
+                                        method="post"
+                                        as="button"
+                                        className="mt-2 flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left font-bold text-red-500 transition hover:bg-red-50"
+                                    >
+                                        <span>↪</span>
+                                        Log Out
+                                    </Link>
+                                </div>
+                            )}
                         </div>
                     </div>
+
+                    <button
+                        type="button"
+                        onClick={() => setMobileMenuOpen((current) => !current)}
+                        className="rounded-xl border-none bg-white/60 p-3 text-2xl text-gray-700 md:hidden"
+                    >
+                        {mobileMenuOpen ? '✕' : '☰'}
+                    </button>
                 </div>
 
-                <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
-                    <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
-                        </ResponsiveNavLink>
-                    </div>
+                {mobileMenuOpen && (
+                    <div className="border-t border-pink-100 bg-white/90 px-6 py-5 md:hidden">
+                        <div className="flex flex-col gap-3">
+                            <a
+                                href="/products"
+                                className="rounded-2xl px-4 py-3 font-bold text-gray-700 hover:bg-pink-50"
+                            >
+                                Products
+                            </a>
 
-                    <div className="pt-4 pb-1 border-t border-gray-200">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">{user.name}</div>
-                            <div className="font-medium text-sm text-gray-500">{user.email}</div>
-                        </div>
+                            <a
+                                href="/cart"
+                                className="rounded-2xl px-4 py-3 font-bold text-gray-700 hover:bg-pink-50"
+                            >
+                                Cart
+                            </a>
 
-                        <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
-                            <ResponsiveNavLink method="post" href={route('logout')} as="button">
+                            <a
+                                href="/my-orders"
+                                className="rounded-2xl px-4 py-3 font-bold text-gray-700 hover:bg-pink-50"
+                            >
+                                My Orders
+                            </a>
+
+                            <a
+                                href="/wishlist"
+                                className="rounded-2xl px-4 py-3 font-bold text-gray-700 hover:bg-pink-50"
+                            >
+                                Wishlist
+                            </a>
+
+                            <a
+                                href="/support-messages"
+                                className="rounded-2xl px-4 py-3 font-bold text-gray-700 hover:bg-pink-50"
+                            >
+                                Support Messages
+                            </a>
+
+                            <Link
+                                href="/profile"
+                                className="rounded-2xl bg-gradient-to-r from-pink-100 to-indigo-100 px-4 py-3 font-bold text-pink-600"
+                            >
+                                Account Settings
+                            </Link>
+
+                            <Link
+                                href={route('logout')}
+                                method="post"
+                                as="button"
+                                className="rounded-2xl px-4 py-3 text-left font-bold text-red-500 hover:bg-red-50"
+                            >
                                 Log Out
-                            </ResponsiveNavLink>
+                            </Link>
                         </div>
                     </div>
-                </div>
+                )}
             </nav>
 
             {header && (
-                <header className="bg-white shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
+                <header className="border-b border-white/70 bg-white/60 shadow-sm backdrop-blur-xl">
+                    <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                        {header}
+                    </div>
                 </header>
             )}
 
