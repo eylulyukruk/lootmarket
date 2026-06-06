@@ -453,6 +453,49 @@
         .admin-logout-btn:hover{
             transform:translateY(-3px);
         }
+        .order-information-grid{
+            display:grid;
+            grid-template-columns:repeat(3,minmax(0,1fr));
+            gap:16px;
+            margin-bottom:22px;
+        }
+
+        .information-box{
+            padding:19px;
+            border-radius:21px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,235,245,0.72),
+                    rgba(230,239,255,0.72)
+                );
+
+            border:1px solid rgba(255,255,255,0.74);
+        }
+
+        .information-box h3{
+            margin:0 0 14px;
+            color:#d46f8d;
+            font-size:18px;
+        }
+
+        .information-box p{
+            margin:8px 0;
+            color:#5d5d6b;
+            line-height:1.5;
+            word-break:break-word;
+        }
+
+        .information-box strong{
+            color:#3f3f4c;
+        }
+
+        @media(max-width:1050px){
+            .order-information-grid{
+                grid-template-columns:1fr;
+            }
+        }
     </style>
 </head>
 
@@ -535,11 +578,75 @@
                             </form>
                         </div>
 
-                        <div class="customer">
-                            <strong>Customer:</strong>
-                            {{ $order->user->name ?? 'Unknown User' }}
-                            —
-                            {{ $order->user->email ?? 'No email' }}
+                        <div class="order-information-grid">
+
+                            <div class="information-box">
+                                <h3>Customer Information</h3>
+
+                                <p>
+                                    <strong>Name:</strong>
+                                    {{ $order->name ?? $order->user->name ?? 'Unknown User' }}
+                                </p>
+
+                                <p>
+                                    <strong>Email:</strong>
+                                    {{ $order->email ?? $order->user->email ?? 'No email' }}
+                                </p>
+
+                                <p>
+                                    <strong>Phone:</strong>
+                                    {{ $order->phone ?: 'Not provided' }}
+                                </p>
+                            </div>
+
+                            <div class="information-box">
+                                <h3>Delivery Address</h3>
+
+                                <p>
+                                    <strong>Address:</strong>
+                                    {{ $order->address ?: 'Not provided' }}
+                                </p>
+
+                                <p>
+                                    <strong>City:</strong>
+                                    {{ $order->city ?: 'Not provided' }}
+                                </p>
+
+                                <p>
+                                    <strong>Country:</strong>
+                                    {{ $order->country ?: 'Not provided' }}
+                                </p>
+
+                                <p>
+                                    <strong>ZIP Code:</strong>
+                                    {{ $order->zip_code ?: 'Not provided' }}
+                                </p>
+                            </div>
+
+                            <div class="information-box">
+                                <h3>Payment & Shipping</h3>
+
+                                <p>
+                                    <strong>Payment:</strong>
+                                    {{ $order->payment_method ?: 'Not provided' }}
+                                </p>
+
+                                <p>
+                                    <strong>Shipping:</strong>
+                                    {{ $order->shipping_method ?: 'Not provided' }}
+                                </p>
+
+                                <p>
+                                    <strong>Shipping Price:</strong>
+                                    ${{ number_format($order->shipping_price ?? 0, 2) }}
+                                </p>
+
+                                <p>
+                                    <strong>Subtotal:</strong>
+                                    ${{ number_format($order->subtotal ?? 0, 2) }}
+                                </p>
+                            </div>
+
                         </div>
 
                         <div class="items">
