@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
@@ -21,11 +22,20 @@ class OrderController extends Controller
         return view('products.checkout', compact('cart'));
     }
 
-    public function pay()
+    public function pay(Request $request)
     {
-        if (!auth()->check()) {
-            return redirect('/login');
-        }
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:30'],
+            'phone_code' => ['required', 'string', 'max:10'],
+            'address' => ['required', 'string', 'max:1000'],
+            'city' => ['required', 'string', 'max:255'],
+            'country' => ['required', 'string', 'max:255'],
+            'zip_code' => ['nullable', 'string', 'max:50'],
+            'shipping_method' => ['required', 'in:Free Shipping,Standard Shipping'],
+            'payment_method' => ['required', 'in:Credit Card,Direct Bank Transfer,Cash on Delivery'],
+        ]);
 
         $cart = session()->get('cart', []);
 
@@ -35,7 +45,7 @@ class OrderController extends Controller
         }
 
         try {
-            DB::transaction(function () use ($cart) {
+            DB::transaction(function () use ($cart, $request) {
                 $subtotal = 0;
                 $products = [];
 
@@ -57,12 +67,29 @@ class OrderController extends Controller
                     $products[$productId] = $product;
                 }
 
+                $shippingPrice =
+                    $request->shipping_method === 'Standard Shipping'
+                        ? 4
+                        : 0;
+
                 $tax = round($subtotal * 0.08, 2);
-                $grandTotal = $subtotal + $tax;
+
+                $grandTotal = $subtotal + $shippingPrice + $tax;
 
                 $order = Order::create([
                     'user_id' => auth()->id(),
+                    'name' => $request->name,
+                    'email' => $request->email,
+                    'phone' => trim($request->phone_code . ' ' . $request->phone),
+                    'address' => $request->address,
+                    'city' => $request->city,
+                    'country' => $request->country,
+                    'zip_code' => $request->zip_code,
+                    'subtotal' => $subtotal,
+                    'shipping_price' => $shippingPrice,
                     'total' => $grandTotal,
+                    'shipping_method' => $request->shipping_method,
+                    'payment_method' => $request->payment_method,
                     'status' => 'Pending',
                 ]);
 
@@ -77,10 +104,7 @@ class OrderController extends Controller
                         'quantity' => $item['quantity'],
                     ]);
 
-                    $product->decrement(
-                        'stock',
-                        $item['quantity']
-                    );
+                    $product->decrement('stock', $item['quantity']);
                 }
             });
         } catch (\Exception $exception) {
@@ -91,10 +115,7 @@ class OrderController extends Controller
         session()->forget('cart');
 
         return redirect('/order-success')
-            ->with(
-                'success',
-                'Your order has been placed successfully.'
-            );
+            ->with('success', 'Your order has been placed successfully.');
     }
 
     public function orderSuccess()
