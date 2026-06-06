@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\User;
 use App\Models\Order;
 use Illuminate\Support\Facades\DB;
+use App\Models\SupportMessage;
 class AdminController extends Controller
 {
     public function index()
@@ -35,6 +36,12 @@ class AdminController extends Controller
             $monthLabels[] = date('M', mktime(0, 0, 0, $sale->month, 1));
             $salesValues[] = $sale->revenue;
         }
+        $openMessages = SupportMessage::where('status', 'Open')->count();
+
+        $latestMessages = SupportMessage::with('user')
+            ->latest()
+            ->take(3)
+            ->get();
 
         return view('admin.dashboard', compact(
             'totalProducts',
@@ -43,7 +50,9 @@ class AdminController extends Controller
             'totalRevenue',
             'pendingOrders',
             'monthLabels',
-            'salesValues'
+            'salesValues',
+            'openMessages',
+            'latestMessages'
         ));
     }
 }

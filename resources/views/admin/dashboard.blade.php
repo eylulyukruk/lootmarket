@@ -602,6 +602,115 @@
             width:100%;
             height:100%;
         }
+        .support-preview-section{
+            margin-top:34px;
+        }
+
+        .support-preview-card{
+            padding:28px;
+            border-radius:30px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgb(255 225 238 / 0.92),
+                    rgb(246 237 255 / 0.92),
+                    rgb(220 234 253 / 0.92)
+                );
+
+            border:1px solid rgba(255,255,255,0.75);
+
+            box-shadow:
+                0 22px 55px rgba(160,170,255,0.14);
+        }
+
+        .support-preview-list{
+            display:flex;
+            flex-direction:column;
+            gap:16px;
+        }
+
+        .support-preview-item{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:20px;
+
+            padding:18px 20px;
+
+            border-radius:22px;
+
+            background:rgba(255,255,255,0.56);
+
+            border:1px solid rgba(255,255,255,0.70);
+        }
+
+        .support-preview-item strong{
+            display:block;
+            margin-bottom:6px;
+            color:#d46f8d;
+            font-size:17px;
+        }
+
+        .support-preview-item p{
+            margin:0;
+            color:#777;
+            line-height:1.5;
+        }
+
+        .message-status{
+            flex-shrink:0;
+
+            padding:8px 15px;
+
+            border-radius:999px;
+
+            color:white;
+            font-size:13px;
+            font-weight:900;
+        }
+
+        .message-open{
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff9fc5,
+                    #a892ff
+                );
+        }
+
+        .message-answered{
+            background:
+                linear-gradient(
+                    135deg,
+                    #69d6ad,
+                    #73aef5
+                );
+        }
+
+        .view-messages-btn{
+            display:inline-block;
+
+            margin-top:22px;
+
+            padding:14px 22px;
+
+            border-radius:18px;
+
+            color:white;
+            text-decoration:none;
+            font-weight:900;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff62a9,
+                    #7d8fff
+                );
+
+            box-shadow:
+                0 14px 34px rgba(150,130,255,0.24);
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -609,38 +718,7 @@
 
 <div class="layout">
 
-    <div class="sidebar">
-
-        <a href="/admin" class="admin-logo">
-            <img src="/images/logo.png">
-            <span>LootMarket</span>
-        </a>
-
-        <a href="/admin">Dashboard</a>
-        <a href="/admin/products">Products</a>
-        <a href="/admin/categories">Categories</a>
-        <a href="/admin/orders">Orders</a>
-        <a href="/admin/users">Users</a>
-        <div class="admin-profile-box">
-            <div class="admin-avatar">
-                {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-            </div>
-
-            <div>
-                <strong>{{ auth()->user()->name }}</strong>
-                <span>Admin Panel</span>
-            </div>
-        </div>
-
-        <form action="/logout" method="POST" class="admin-logout-form">
-            @csrf
-
-            <button type="submit" class="admin-logout-btn">
-                Logout
-            </button>
-        </form>
-
-    </div>
+    @include('admin.partials.sidebar')
 
     <div class="content">
 
@@ -690,6 +768,14 @@
                 </div>
             </div>
 
+            <div class="stat-card">
+                <div class="stat-icon">💬</div>
+                <div>
+                    <h3>Open Messages</h3>
+                    <p>{{ $openMessages }}</p>
+                </div>
+            </div>
+
         </div>
 
         <div class="sales-section">
@@ -712,6 +798,57 @@
                 <div class="chart-wrapper">
                     <canvas id="salesChart"></canvas>
                 </div>
+
+            </div>
+
+        </div>
+        <div class="support-preview-section">
+
+            <div class="section-title">
+                <h2>Support Messages</h2>
+            </div>
+
+            <div class="support-preview-card">
+
+                @if($latestMessages->count() > 0)
+
+                    <div class="support-preview-list">
+
+                        @foreach($latestMessages as $message)
+
+                            <div class="support-preview-item">
+
+                                <div>
+                                    <strong>{{ $message->subject }}</strong>
+
+                                    <p>
+                                        {{ $message->user->name ?? 'Unknown User' }}
+                                        —
+                                        {{ \Illuminate\Support\Str::limit($message->message, 70) }}
+                                    </p>
+                                </div>
+
+                                <span class="message-status {{ $message->status === 'Answered' ? 'message-answered' : 'message-open' }}">
+                            {{ $message->status }}
+                        </span>
+
+                            </div>
+
+                        @endforeach
+
+                    </div>
+
+                    <a href="/admin/support-messages" class="view-messages-btn">
+                        View All Messages
+                    </a>
+
+                @else
+
+                    <div class="empty-box">
+                        No support messages yet.
+                    </div>
+
+                @endif
 
             </div>
 
