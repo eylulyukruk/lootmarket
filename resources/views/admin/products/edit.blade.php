@@ -82,7 +82,8 @@
             box-shadow:0 15px 35px rgba(0,0,0,0.06);
         }
 
-        input{
+        input,
+        select{
             width:100%;
             padding:18px;
             margin-bottom:20px;
@@ -227,6 +228,46 @@
         .admin-logout-btn:hover{
             transform:translateY(-3px);
         }
+        .current-image-box{
+            margin-bottom:20px;
+        }
+
+        .current-image-box label{
+            display:block;
+            margin-bottom:10px;
+            color:#444;
+            font-weight:700;
+        }
+
+        .current-product-image{
+            display:block;
+            width:150px;
+            height:110px;
+            object-fit:cover;
+            border-radius:18px;
+            margin-bottom:16px;
+            border:1px solid rgba(210,210,230,0.7);
+        }
+        .field-error{
+            margin:-12px 0 18px;
+            color:#dc426d;
+            font-size:13px;
+            font-weight:700;
+        }
+        .error-box{
+            max-width:700px;
+            margin-bottom:22px;
+            padding:17px 20px;
+            border-radius:18px;
+            color:#a83e5d;
+            background:rgba(255,225,235,0.88);
+            border:1px solid rgba(240,95,127,0.24);
+        }
+
+        .error-box ul{
+            margin:9px 0 0;
+            padding-left:20px;
+        }
     </style>
 </head>
 <body>
@@ -238,8 +279,19 @@
     <div class="content">
 
         <h1>Edit Product</h1>
+        @if($errors->any())
+            <div class="error-box">
+                <strong>Product could not be updated:</strong>
 
-        <form action="/admin/products/update/{{ $product->id }}" method="POST">
+                <ul>
+                    @foreach($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form action="/admin/products/update/{{ $product->id }}" method="POST"  enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -250,8 +302,91 @@
             <input type="text" name="category" value="{{ $product->category }}" placeholder="Category">
 
             <input type="text" name="type" value="{{ $product->type }}" placeholder="Type">
+            <div class="form-group">
+                <label for="rarity">Rarity</label>
 
-            <input type="text" name="image" value="{{ $product->image }}" placeholder="Image URL">
+                <select id="rarity" name="rarity">
+                    <option
+                        value=""
+                        {{ old('rarity', $product->rarity) === null ||
+                           old('rarity', $product->rarity) === ''
+                            ? 'selected'
+                            : '' }}
+                    >
+                        No Rarity
+                    </option>
+
+                    <option
+                        value="Mil-Spec"
+                        {{ old('rarity', $product->rarity) === 'Mil-Spec'
+                            ? 'selected'
+                            : '' }}
+                    >
+                        Mil-Spec
+                    </option>
+
+                    <option
+                        value="Restricted"
+                        {{ old('rarity', $product->rarity) === 'Restricted'
+                            ? 'selected'
+                            : '' }}
+                    >
+                        Restricted
+                    </option>
+
+                    <option
+                        value="Classified"
+                        {{ old('rarity', $product->rarity) === 'Classified'
+                            ? 'selected'
+                            : '' }}
+                    >
+                        Classified
+                    </option>
+
+                    <option
+                        value="Covert"
+                        {{ old('rarity', $product->rarity) === 'Covert'
+                            ? 'selected'
+                            : '' }}
+                    >
+                        Covert
+                    </option>
+
+                    <option
+                        value="Rare Special"
+                        {{ old('rarity', $product->rarity) === 'Rare Special'
+                            ? 'selected'
+                            : '' }}
+                    >
+                        Rare Special
+                    </option>
+                </select>
+
+                @error('rarity')
+                <p class="field-error">{{ $message }}</p>
+                @enderror
+            </div>
+
+            @if($product->image)
+                <div class="current-image-box">
+                    <label>Current Image</label>
+
+                    <img
+                        src="{{ $product->image }}"
+                        alt="{{ $product->name }}"
+                        class="current-product-image"
+                    >
+                </div>
+            @endif
+
+            <label for="image">Change Image</label>
+
+            <input
+                id="image"
+                type="file"
+                name="image"
+                accept="image/*"
+            >
 
             <input type="number" step="0.01" name="price" value="{{ $product->price }}" placeholder="Price">
 

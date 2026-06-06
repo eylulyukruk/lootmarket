@@ -118,21 +118,35 @@
                 0 15px 35px rgba(0,0,0,0.06);
         }
 
-        input{
-
+        input,
+        select{
             width:100%;
-
             padding:18px;
-
             margin-bottom:20px;
 
             border-radius:16px;
-
             border:1px solid #eee;
+            outline:none;
 
             font-size:16px;
+            font-family:Arial,sans-serif;
 
             box-sizing:border-box;
+
+            color:#2f2f3a;
+            background:white;
+
+            transition:0.25s;
+        }
+
+        select{
+            cursor:pointer;
+        }
+
+        input:focus,
+        select:focus{
+            border-color:#ff7eb6;
+            box-shadow:0 0 0 4px rgba(255,126,182,0.12);
         }
 
         button{
@@ -306,6 +320,14 @@
             <input type="text" name="category" placeholder="Category">
 
             <input type="text" name="type" placeholder="Type">
+            <select name="rarity">
+                <option value="">No Rarity</option>
+                <option value="Mil-Spec">Mil-Spec</option>
+                <option value="Restricted">Restricted</option>
+                <option value="Classified">Classified</option>
+                <option value="Covert">Covert</option>
+                <option value="Rare Special">Rare Special</option>
+            </select>
 
             <input type="file" name="image" accept="image/*">
 

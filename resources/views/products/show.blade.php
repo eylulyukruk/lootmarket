@@ -969,6 +969,57 @@
                 <span class="stock-dot"></span>
                 Available stock: {{ $product->stock }}
             </p>
+            @if($product->rarity)
+
+                @php
+                    $rarityLevels = [
+                        'Mil-Spec' => 1,
+                        'Restricted' => 2,
+                        'Classified' => 3,
+                        'Covert' => 4,
+                        'Rare Special' => 5,
+                    ];
+
+                    $rarityLevel = $rarityLevels[$product->rarity] ?? 0;
+                @endphp
+
+                <div class="rarity-area">
+
+                    <div class="rarity-header">
+                        <span>Skin Rarity</span>
+
+                        <strong class="rarity-name rarity-name-{{ $rarityLevel }}">
+                            {{ $product->rarity }}
+                        </strong>
+                    </div>
+
+                    <div class="rarity-bar">
+
+            <span class="rarity-part blue
+                {{ $rarityLevel >= 1 ? 'active' : '' }}">
+            </span>
+
+                        <span class="rarity-part purple
+                {{ $rarityLevel >= 2 ? 'active' : '' }}">
+            </span>
+
+                        <span class="rarity-part pink
+                {{ $rarityLevel >= 3 ? 'active' : '' }}">
+            </span>
+
+                        <span class="rarity-part red
+                {{ $rarityLevel >= 4 ? 'active' : '' }}">
+            </span>
+
+                        <span class="rarity-part gold
+                {{ $rarityLevel >= 5 ? 'active' : '' }}">
+            </span>
+
+                    </div>
+
+                </div>
+
+            @endif
 
             <div class="mini-actions">
                 <form action="/wishlist/toggle/{{ $product->id }}" method="POST">

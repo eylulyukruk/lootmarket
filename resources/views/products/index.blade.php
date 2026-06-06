@@ -1303,6 +1303,106 @@
             max-height:260px;
             overflow-y:auto;
         }
+        .rarity-area{
+            margin-top:14px;
+            padding:12px 13px;
+
+            border-radius:17px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.58),
+                    rgba(238,236,255,0.54)
+                );
+
+            border:1px solid rgba(255,255,255,0.72);
+        }
+
+        .rarity-header{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:12px;
+
+            margin-bottom:9px;
+
+            color:#656575;
+            font-size:13px;
+            font-weight:800;
+        }
+
+        .rarity-name{
+            font-size:13px;
+            font-weight:900;
+        }
+
+        .rarity-name-1{
+            color:#378be5;
+        }
+
+        .rarity-name-2{
+            color:#7652e8;
+        }
+
+        .rarity-name-3{
+            color:#e64daf;
+        }
+
+        .rarity-name-4{
+            color:#ea4d62;
+        }
+
+        .rarity-name-5{
+            color:#d99600;
+        }
+
+        .rarity-bar{
+            display:flex;
+            gap:5px;
+
+            width:100%;
+        }
+
+        .rarity-part{
+            flex:1;
+            height:7px;
+
+            border-radius:999px;
+
+            opacity:0.20;
+            filter:saturate(0.65);
+
+            transition:0.25s;
+        }
+
+        .rarity-part.active{
+            opacity:1;
+            filter:saturate(1);
+
+            box-shadow:
+                0 0 8px rgba(150,130,255,0.18);
+        }
+
+        .rarity-part.blue{
+            background:#4a9cff;
+        }
+
+        .rarity-part.purple{
+            background:#7653e8;
+        }
+
+        .rarity-part.pink{
+            background:#ef5fc5;
+        }
+
+        .rarity-part.red{
+            background:#f05267;
+        }
+
+        .rarity-part.gold{
+            background:#ffb522;
+        }
     </style>
 </head>
 <body>
@@ -1587,6 +1687,57 @@
 
             <div class="price">${{ $product->price }}</div>
             <p class="stock">Stock: {{ $product->stock }}</p>
+                @if($product->rarity)
+
+                    @php
+                        $rarityLevels = [
+                            'Mil-Spec' => 1,
+                            'Restricted' => 2,
+                            'Classified' => 3,
+                            'Covert' => 4,
+                            'Rare Special' => 5,
+                        ];
+
+                        $rarityLevel = $rarityLevels[$product->rarity] ?? 0;
+                    @endphp
+
+                    <div class="rarity-area">
+
+                        <div class="rarity-header">
+                            <span>Rarity</span>
+
+                            <strong class="rarity-name rarity-name-{{ $rarityLevel }}">
+                                {{ $product->rarity }}
+                            </strong>
+                        </div>
+
+                        <div class="rarity-bar">
+
+            <span class="rarity-part blue
+                {{ $rarityLevel >= 1 ? 'active' : '' }}">
+            </span>
+
+                            <span class="rarity-part purple
+                {{ $rarityLevel >= 2 ? 'active' : '' }}">
+            </span>
+
+                            <span class="rarity-part pink
+                {{ $rarityLevel >= 3 ? 'active' : '' }}">
+            </span>
+
+                            <span class="rarity-part red
+                {{ $rarityLevel >= 4 ? 'active' : '' }}">
+            </span>
+
+                            <span class="rarity-part gold
+                {{ $rarityLevel >= 5 ? 'active' : '' }}">
+            </span>
+
+                        </div>
+
+                    </div>
+
+                @endif
 
                 <a href="/products/{{ $product->id }}" class="view-button">
                     View Item
