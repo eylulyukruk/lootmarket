@@ -10,6 +10,8 @@ use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminOrderController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\SupportMessageController;
+use App\Http\Controllers\AdminSupportMessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +33,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/support-messages', [SupportMessageController::class, 'index']);
+    Route::post('/support-messages', [SupportMessageController::class, 'store']);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -55,7 +59,6 @@ Route::post('/wishlist/toggle/{id}', [ProductController::class, 'toggleWishlist'
 Route::get('/wishlist', [ProductController::class, 'wishlist'])->middleware('auth');
 
 
-
 Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::get('/admin', [AdminController::class, 'index']);
@@ -70,6 +73,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/orders/update-status/{id}', [AdminOrderController::class, 'updateStatus']);
     Route::get('/admin/users', [AdminUserController::class, 'index']);
     Route::get('/admin/categories', [AdminCategoryController::class, 'index']);
+    Route::get(
+        '/admin/support-messages',
+        [AdminSupportMessageController::class, 'index']
+    );
+
+    Route::post(
+        '/admin/support-messages/{id}/reply',
+        [AdminSupportMessageController::class, 'reply']
+    );
 });
 
 

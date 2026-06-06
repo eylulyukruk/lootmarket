@@ -233,6 +233,13 @@
                         Wishlist
                     </a>
 
+                    <a href="/support-messages" class="account-item">
+    <span class="account-icon">
+        <i class="fa-regular fa-message"></i>
+    </span>
+                        Support Messages
+                    </a>
+
                     <a href="/profile" class="account-item">
                         <span class="account-icon">
     <i class="fa-solid fa-gear"></i>
