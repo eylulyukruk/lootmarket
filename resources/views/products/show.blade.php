@@ -829,6 +829,66 @@
         .copy-message.show{
             display:block;
         }
+        .quantity-control{
+            border:none;
+            background:transparent;
+            color:#d46f8d;
+            font-size:25px;
+            font-weight:900;
+            cursor:pointer;
+            padding:0 8px;
+        }
+
+        .quantity-control:hover{
+            transform:scale(1.15);
+        }
+
+        .add-btn:disabled{
+            cursor:not-allowed;
+            opacity:0.55;
+            transform:none;
+        }
+        .product-error-message,
+        .product-success-message{
+            max-width:1200px;
+            margin:24px auto 0;
+            padding:15px 20px;
+            border-radius:18px;
+            font-weight:800;
+            position:relative;
+            z-index:5;
+        }
+
+        .product-error-message{
+            color:#a83e5d;
+            background:rgba(255,225,235,0.90);
+            border:1px solid rgba(240,95,127,0.24);
+        }
+
+        .product-success-message{
+            color:#246f52;
+            background:rgba(196,255,224,0.84);
+            border:1px solid rgba(120,220,175,0.35);
+        }
+        .quantity-stock-message{
+            display:none;
+            margin-top:10px;
+            padding:11px 15px;
+            width:fit-content;
+
+            border-radius:15px;
+
+            color:#a83e5d;
+            font-size:14px;
+            font-weight:800;
+
+            background:rgba(255,225,235,0.90);
+            border:1px solid rgba(240,95,127,0.24);
+        }
+
+        .quantity-stock-message.show{
+            display:block;
+        }
     </style>
 </head>
 
@@ -856,6 +916,19 @@
 
 </div>
 @include('partials.navbar')
+
+@if(session('error'))
+    <div class="product-error-message">
+        {{ session('error') }}
+    </div>
+@endif
+
+@if(session('success'))
+    <div class="product-success-message">
+        {{ session('success') }}
+    </div>
+@endif
+
 
 <div class="page">
 
@@ -923,20 +996,51 @@
 
             <div class="quantity-title">Quantity</div>
 
-            <div class="actions">
+            <form
+                action="/cart/add/{{ $product->id }}"
+                method="POST"
+                class="actions"
+            >
+                @csrf
+
                 <div class="quantity">
-                    <span>-</span>
-                    <span>1</span>
-                    <span>+</span>
+                    <button
+                        type="button"
+                        class="quantity-control"
+                        onclick="decreaseProductQuantity()"
+                    >
+                        −
+                    </button>
+
+                    <span id="productQuantityText">1</span>
+
+                    <button
+                        type="button"
+                        class="quantity-control"
+                        onclick="increaseProductQuantity()"
+                    >
+                        +
+                    </button>
                 </div>
 
-                <form action="/cart/add/{{ $product->id }}" method="POST">
-                    @csrf
-                    <button type="submit" class="add-btn">
-                        🛒 Add to Cart
-                    </button>
-                </form>
-            </div>
+                <input
+                    type="hidden"
+                    name="quantity"
+                    id="productQuantityInput"
+                    value="1"
+                >
+                <div id="quantityStockMessage" class="quantity-stock-message">
+                    Maximum available stock reached.
+                </div>
+
+                <button
+                    type="submit"
+                    class="add-btn"
+                    {{ $product->stock <= 0 ? 'disabled' : '' }}
+                >
+                    {{ $product->stock > 0 ? '🛒 Add to Cart' : 'Out of Stock' }}
+                </button>
+            </form>
 
             <div class="info-row">
                 <div class="info-box">
@@ -1034,6 +1138,53 @@
         }, 1800);
     }
 </script>
+<script>
+    let productQuantity = 1;
+    const maximumStock = {{ (int) $product->stock }};
 
+    function updateProductQuantity() {
+        document.getElementById('productQuantityText').textContent =
+            productQuantity;
+
+        document.getElementById('productQuantityInput').value =
+            productQuantity;
+    }
+
+    function showStockMessage() {
+        const message = document.getElementById('quantityStockMessage');
+
+        message.classList.add('show');
+
+        clearTimeout(window.stockMessageTimer);
+
+        window.stockMessageTimer = setTimeout(function () {
+            message.classList.remove('show');
+        }, 2500);
+    }
+
+    function increaseProductQuantity() {
+        if (productQuantity < maximumStock) {
+            productQuantity++;
+            updateProductQuantity();
+
+            document
+                .getElementById('quantityStockMessage')
+                .classList.remove('show');
+        } else {
+            showStockMessage();
+        }
+    }
+
+    function decreaseProductQuantity() {
+        if (productQuantity > 1) {
+            productQuantity--;
+            updateProductQuantity();
+
+            document
+                .getElementById('quantityStockMessage')
+                .classList.remove('show');
+        }
+    }
+</script>
 </body>
 </html>
