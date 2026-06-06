@@ -12,7 +12,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\SupportMessageController;
 use App\Http\Controllers\AdminSupportMessageController;
-
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -49,11 +49,10 @@ Route::post('/cart/remove/{id}', [ProductController::class, 'removeFromCart']);
 Route::post('/cart/increase/{id}', [ProductController::class, 'increaseCart']);
 Route::post('/cart/decrease/{id}', [ProductController::class, 'decreaseCart']);
 
-Route::get('/checkout', [ProductController::class, 'checkout']);
-Route::post('/checkout/pay', [ProductController::class, 'pay']);
-Route::get('/my-orders', [ProductController::class, 'myOrders'])->middleware('auth');
-
-Route::get('/order-success', [ProductController::class, 'orderSuccess']);
+Route::get('/checkout', [OrderController::class, 'checkout']);
+Route::post('/checkout/pay', [OrderController::class, 'pay']);
+Route::get('/order-success', [OrderController::class, 'orderSuccess']);
+Route::get('/my-orders', [OrderController::class, 'myOrders']);
 Route::post('/wishlist/toggle/{id}', [ProductController::class, 'toggleWishlist'])->middleware('auth');
 
 Route::get('/wishlist', [ProductController::class, 'wishlist'])->middleware('auth');

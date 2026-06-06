@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\Order;
-use App\Models\OrderItem;
 use App\Models\Wishlist;
 class ProductController extends Controller
 {
@@ -118,26 +116,51 @@ class ProductController extends Controller
     {
         //
     }
-    public function addToCart($id)
+    public function addToCart(Request $request, $id)
     {
+        $request->validate([
+            'quantity' => ['nullable', 'integer', 'min:1'],
+        ]);
+
         $product = Product::findOrFail($id);
+
+        $quantity = (int) ($request->quantity ?? 1);
+
+        if ($product->stock <= 0) {
+            return back()->with('error', 'This product is out of stock.');
+        }
+
+        if ($quantity > $product->stock) {
+            return back()->with(
+                'error',
+                'Only ' . $product->stock . ' item(s) are available.'
+            );
+        }
 
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
-        } else {
-            $cart[$id] = [
-                'name' => $product->name,
-                'price' => $product->price,
-                'image' => $product->image,
-                'quantity' => 1,
-            ];
+        $currentQuantity = $cart[$id]['quantity'] ?? 0;
+        $newQuantity = $currentQuantity + $quantity;
+
+        if ($newQuantity > $product->stock) {
+            return back()->with(
+                'error',
+                'You cannot add more than the available stock. Available stock: ' .
+                $product->stock
+            );
         }
+
+        $cart[$id] = [
+            'name' => $product->name,
+            'price' => $product->price,
+            'image' => $product->image,
+            'quantity' => $newQuantity,
+        ];
 
         session()->put('cart', $cart);
 
-        return redirect('/cart');
+        return redirect('/cart')
+            ->with('success', 'Product added to cart.');
     }
 
     public function cart()
@@ -161,14 +184,28 @@ class ProductController extends Controller
     {
         $cart = session()->get('cart', []);
 
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity']++;
-            session()->put('cart', $cart);
+        if (!isset($cart[$id])) {
+            return redirect('/cart');
         }
 
-        return redirect('/cart');
-    }
+        $product = Product::findOrFail($id);
 
+        $newQuantity = $cart[$id]['quantity'] + 1;
+
+        if ($newQuantity > $product->stock) {
+            return redirect('/cart')->with(
+                'error',
+                'Maximum available stock is ' . $product->stock . '.'
+            );
+        }
+
+        $cart[$id]['quantity'] = $newQuantity;
+
+        session()->put('cart', $cart);
+
+        return redirect('/cart')
+            ->with('success', 'Cart quantity updated.');
+    }
     public function decreaseCart($id)
     {
         $cart = session()->get('cart', []);
@@ -185,68 +222,7 @@ class ProductController extends Controller
 
         return redirect('/cart');
     }
-    public function checkout()
-    {
-        $cart = session()->get('cart', []);
 
-        return view('products.checkout', compact('cart'));
-    }
-    public function pay()
-    {
-        if (!auth()->check()) {
-            return redirect('/login');
-        }
-
-        $cart = session()->get('cart', []);
-
-        if (count($cart) === 0) {
-            return redirect('/cart');
-        }
-
-        $total = 0;
-
-        foreach ($cart as $item) {
-            $total += $item['price'] * $item['quantity'];
-        }
-
-        $tax = round($total * 0.08, 2);
-
-        $grandTotal = $total + $tax;
-
-        $order = Order::create([
-            'user_id' => auth()->id(),
-            'total' => $grandTotal,
-            'status' => 'Pending',
-        ]);
-
-        foreach ($cart as $item) {
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_name' => $item['name'],
-                'product_image' => $item['image'],
-                'price' => $item['price'],
-                'quantity' => $item['quantity'],
-            ]);
-        }
-
-        session()->forget('cart');
-
-        return redirect('/order-success');
-    }
-
-    public function orderSuccess()
-    {
-        return view('products.order-success');
-    }
-    public function myOrders()
-    {
-        $orders = Order::with('items')
-            ->where('user_id', auth()->id())
-            ->latest()
-            ->get();
-
-        return view('products.my-orders', compact('orders'));
-    }
     public function toggleWishlist($id)
     {
         if (!auth()->check()) {
