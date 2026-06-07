@@ -889,6 +889,109 @@
         .quantity-stock-message.show{
             display:block;
         }
+        .rarity-area{
+            max-width:440px;
+            margin:10px 0 24px;
+            padding:15px 17px;
+
+            border-radius:19px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.68),
+                    rgba(238,236,255,0.64)
+                );
+
+            border:1px solid rgba(255,255,255,0.78);
+
+            box-shadow:
+                0 13px 30px rgba(150,140,230,0.12);
+        }
+
+        .rarity-header{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:12px;
+
+            margin-bottom:11px;
+
+            color:#656575;
+            font-size:14px;
+            font-weight:800;
+        }
+
+        .rarity-name{
+            font-size:14px;
+            font-weight:900;
+        }
+
+        .rarity-name-1{
+            color:#378be5;
+        }
+
+        .rarity-name-2{
+            color:#7652e8;
+        }
+
+        .rarity-name-3{
+            color:#e64daf;
+        }
+
+        .rarity-name-4{
+            color:#ea4d62;
+        }
+
+        .rarity-name-5{
+            color:#d99600;
+        }
+
+        .rarity-bar{
+            display:flex;
+            gap:6px;
+            width:100%;
+        }
+
+        .rarity-part{
+            flex:1;
+            height:9px;
+
+            border-radius:999px;
+
+            opacity:0.20;
+            filter:saturate(0.65);
+
+            transition:0.25s;
+        }
+
+        .rarity-part.active{
+            opacity:1;
+            filter:saturate(1);
+
+            box-shadow:
+                0 0 9px rgba(150,130,255,0.20);
+        }
+
+        .rarity-part.blue{
+            background:#4a9cff;
+        }
+
+        .rarity-part.purple{
+            background:#7653e8;
+        }
+
+        .rarity-part.pink{
+            background:#ef5fc5;
+        }
+
+        .rarity-part.red{
+            background:#f05267;
+        }
+
+        .rarity-part.gold{
+            background:#ffb522;
+        }
     </style>
 </head>
 

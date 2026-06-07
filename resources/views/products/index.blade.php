@@ -1303,105 +1303,177 @@
             max-height:260px;
             overflow-y:auto;
         }
-        .rarity-area{
-            margin-top:14px;
-            padding:12px 13px;
+        .rarity-feature{
+            margin:4px 0 15px;
+            padding:11px 14px;
 
-            border-radius:17px;
+            border-radius:16px;
 
             background:
                 linear-gradient(
                     135deg,
-                    rgba(255,255,255,0.58),
-                    rgba(238,236,255,0.54)
+                    rgba(255,255,255,0.70),
+                    rgba(241,235,255,0.66)
                 );
 
-            border:1px solid rgba(255,255,255,0.72);
+            border:1px solid rgba(255,255,255,0.82);
+
+            box-shadow:
+                0 10px 26px rgba(145,135,225,0.12);
+
+            position:relative;
+            overflow:hidden;
         }
 
-        .rarity-header{
+        .skin-tier{
+            margin:12px 0 20px;
+            padding:14px 17px 16px;
+
+            border-radius:20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.67),
+                    rgba(243,237,255,0.61)
+                );
+
+            border:1px solid rgba(255,255,255,0.88);
+
+            box-shadow:
+                0 12px 30px rgba(142,130,215,0.10);
+
+            position:relative;
+            overflow:hidden;
+        }
+
+        .skin-tier::before{
+            content:"";
+
+            position:absolute;
+            inset:0;
+
+            pointer-events:none;
+            opacity:0.13;
+        }
+
+        .skin-tier-1::before{
+            background:linear-gradient(90deg,#4a9cff,transparent 65%);
+        }
+
+        .skin-tier-2::before{
+            background:linear-gradient(90deg,#7653e8,transparent 65%);
+        }
+
+        .skin-tier-3::before{
+            background:linear-gradient(90deg,#ef5fc5,transparent 65%);
+        }
+
+        .skin-tier-4::before{
+            background:linear-gradient(90deg,#f05267,transparent 65%);
+        }
+
+        .skin-tier-5::before{
+            background:linear-gradient(90deg,#ffb522,transparent 65%);
+        }
+
+        .skin-tier-header{
+            position:relative;
+            z-index:2;
+
             display:flex;
             align-items:center;
             justify-content:space-between;
             gap:12px;
 
-            margin-bottom:9px;
-
-            color:#656575;
-            font-size:13px;
-            font-weight:800;
+            margin-bottom:13px;
         }
 
-        .rarity-name{
+        .skin-tier-name{
+            display:flex;
+            align-items:center;
+            gap:9px;
+
+            font-size:15px;
+            font-weight:900;
+        }
+
+        .skin-tier-label{
+            color:#77778a;
             font-size:13px;
             font-weight:900;
         }
 
-        .rarity-name-1{
+        .skin-tier-diamond{
+            font-size:14px;
+        }
+
+        .skin-tier-1 .skin-tier-name{
             color:#378be5;
         }
 
-        .rarity-name-2{
+        .skin-tier-2 .skin-tier-name{
             color:#7652e8;
         }
 
-        .rarity-name-3{
+        .skin-tier-3 .skin-tier-name{
             color:#e64daf;
         }
 
-        .rarity-name-4{
+        .skin-tier-4 .skin-tier-name{
             color:#ea4d62;
         }
 
-        .rarity-name-5{
-            color:#d99600;
+        .skin-tier-5 .skin-tier-name{
+            color:#c88700;
         }
 
-        .rarity-bar{
-            display:flex;
-            gap:5px;
+        .skin-tier-spectrum{
+            position:relative;
 
             width:100%;
-        }
-
-        .rarity-part{
-            flex:1;
-            height:7px;
+            height:9px;
 
             border-radius:999px;
 
-            opacity:0.20;
-            filter:saturate(0.65);
-
-            transition:0.25s;
-        }
-
-        .rarity-part.active{
-            opacity:1;
-            filter:saturate(1);
+            background:
+                linear-gradient(
+                    90deg,
+                    #3d92ff 0%,
+                    #3d92ff 17%,
+                    #7653e8 17%,
+                    #7653e8 36%,
+                    #ef5fc5 36%,
+                    #ef5fc5 55%,
+                    #f05267 55%,
+                    #f05267 74%,
+                    #ffb522 74%,
+                    #ffd84a 100%
+                );
 
             box-shadow:
-                0 0 8px rgba(150,130,255,0.18);
+                inset 0 1px 2px rgba(255,255,255,0.60),
+                0 4px 12px rgba(120,110,200,0.13);
         }
 
-        .rarity-part.blue{
-            background:#4a9cff;
-        }
+        .skin-tier-marker{
+            position:absolute;
+            top:50%;
 
-        .rarity-part.purple{
-            background:#7653e8;
-        }
+            width:17px;
+            height:17px;
 
-        .rarity-part.pink{
-            background:#ef5fc5;
-        }
+            border:4px solid white;
+            border-radius:50%;
 
-        .rarity-part.red{
-            background:#f05267;
-        }
+            background:#30303b;
 
-        .rarity-part.gold{
-            background:#ffb522;
+            transform:
+                translate(-50%, -50%);
+
+            box-shadow:
+                0 4px 12px rgba(45,45,60,0.34),
+                0 0 0 2px rgba(255,255,255,0.35);
         }
     </style>
 </head>
@@ -1680,13 +1752,6 @@
                     <span class="badge">{{ $product->type }}</span>
 
                 </div>
-
-            <h2>{{ $product->name }}</h2>
-
-            <p class="description">{{ $product->description }}</p>
-
-            <div class="price">${{ $product->price }}</div>
-            <p class="stock">Stock: {{ $product->stock }}</p>
                 @if($product->rarity)
 
                     @php
@@ -1698,46 +1763,49 @@
                             'Rare Special' => 5,
                         ];
 
-                        $rarityLevel = $rarityLevels[$product->rarity] ?? 0;
+                        $rarityPositions = [
+                            'Mil-Spec' => '10%',
+                            'Restricted' => '30%',
+                            'Classified' => '50%',
+                            'Covert' => '70%',
+                            'Rare Special' => '90%',
+                        ];
+
+                        $rarityLevel = $rarityLevels[$product->rarity] ?? 1;
+                        $rarityPosition = $rarityPositions[$product->rarity] ?? '10%';
                     @endphp
 
-                    <div class="rarity-area">
+                    <div class="skin-tier skin-tier-{{ $rarityLevel }}">
 
-                        <div class="rarity-header">
-                            <span>Rarity</span>
+                        <div class="skin-tier-header">
+            <span class="skin-tier-name">
+                <span class="skin-tier-diamond">◆</span>
+                {{ $product->rarity }}
+            </span>
 
-                            <strong class="rarity-name rarity-name-{{ $rarityLevel }}">
-                                {{ $product->rarity }}
-                            </strong>
+                            <span class="skin-tier-label">
+                Skin Tier
+            </span>
                         </div>
 
-                        <div class="rarity-bar">
-
-            <span class="rarity-part blue
-                {{ $rarityLevel >= 1 ? 'active' : '' }}">
-            </span>
-
-                            <span class="rarity-part purple
-                {{ $rarityLevel >= 2 ? 'active' : '' }}">
-            </span>
-
-                            <span class="rarity-part pink
-                {{ $rarityLevel >= 3 ? 'active' : '' }}">
-            </span>
-
-                            <span class="rarity-part red
-                {{ $rarityLevel >= 4 ? 'active' : '' }}">
-            </span>
-
-                            <span class="rarity-part gold
-                {{ $rarityLevel >= 5 ? 'active' : '' }}">
-            </span>
-
+                        <div class="skin-tier-spectrum">
+            <span
+                class="skin-tier-marker"
+                style="left: {{ $rarityPosition }};"
+            ></span>
                         </div>
 
                     </div>
 
                 @endif
+
+            <h2>{{ $product->name }}</h2>
+
+            <p class="description">{{ $product->description }}</p>
+
+            <div class="price">${{ $product->price }}</div>
+            <p class="stock">Stock: {{ $product->stock }}</p>
+
 
                 <a href="/products/{{ $product->id }}" class="view-button">
                     View Item

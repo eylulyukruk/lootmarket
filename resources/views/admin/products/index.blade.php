@@ -281,6 +281,55 @@
         .admin-logout-btn:hover{
             transform:translateY(-3px);
         }
+        .admin-rarity-badge{
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+
+            min-width:105px;
+            padding:8px 12px;
+
+            border-radius:999px;
+
+            font-size:13px;
+            font-weight:900;
+            white-space:nowrap;
+
+            border:1px solid rgba(255,255,255,0.76);
+
+            box-shadow:
+                0 8px 20px rgba(140,130,210,0.12);
+        }
+
+        .rarity-blue{
+            color:#2f7ed8;
+            background:rgba(74,156,255,0.16);
+        }
+
+        .rarity-purple{
+            color:#6f48d8;
+            background:rgba(118,83,232,0.16);
+        }
+
+        .rarity-pink{
+            color:#d83e9f;
+            background:rgba(239,95,197,0.17);
+        }
+
+        .rarity-red{
+            color:#d94357;
+            background:rgba(240,82,103,0.16);
+        }
+
+        .rarity-gold{
+            color:#b97800;
+            background:rgba(255,181,34,0.20);
+        }
+
+        .admin-rarity-empty{
+            color:#a0a0ad;
+            font-weight:700;
+        }
 
     </style>
 
@@ -335,6 +384,7 @@
                 <th>Game / Brand</th>
                 <th>Category</th>
                 <th>Type</th>
+                <th>Rarity</th>
                 <th>Price</th>
                 <th>Stock</th>
                 <th>Actions</th>
@@ -355,6 +405,29 @@
                     <td>{{ $product->game }}</td>
                     <td>{{ $product->category }}</td>
                     <td>{{ $product->type }}</td>
+                    <td>
+                        @if($product->rarity)
+                            @php
+                                $rarityClasses = [
+                                    'Mil-Spec' => 'rarity-blue',
+                                    'Restricted' => 'rarity-purple',
+                                    'Classified' => 'rarity-pink',
+                                    'Covert' => 'rarity-red',
+                                    'Rare Special' => 'rarity-gold',
+                                ];
+
+                                $rarityClass = $rarityClasses[$product->rarity] ?? '';
+                            @endphp
+
+                            <span class="admin-rarity-badge {{ $rarityClass }}">
+            {{ $product->rarity }}
+        </span>
+                        @else
+                            <span class="admin-rarity-empty">
+            —
+        </span>
+                        @endif
+                    </td>
                     <td>${{ $product->price }}</td>
                     <td>{{ $product->stock }}</td>
                     <td>
