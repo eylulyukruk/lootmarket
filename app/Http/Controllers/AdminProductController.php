@@ -99,7 +99,7 @@ class AdminProductController extends Controller
             'stock' => ['required', 'integer', 'min:0'],
             'description' => ['nullable', 'string'],
         ]);
-        
+
 
         $product = Product::findOrFail($id);
 
