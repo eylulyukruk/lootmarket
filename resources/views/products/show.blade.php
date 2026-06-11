@@ -992,6 +992,57 @@
         .rarity-part.gold{
             background:#ffb522;
         }
+        .stock-unavailable{
+            color:#d74468;
+            font-weight:800;
+        }
+
+        .stock-dot-empty{
+            background:#ef5c76;
+            box-shadow:0 0 12px rgba(239,92,118,0.35);
+        }
+        .sold-out-panel{
+            max-width:520px;
+            margin:22px 0 28px;
+            padding:18px 20px;
+
+            display:flex;
+            align-items:center;
+            gap:15px;
+
+            border-radius:20px;
+
+            color:#a63d59;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,222,232,0.86),
+                    rgba(244,230,255,0.82)
+                );
+
+            border:1px solid rgba(239,92,118,0.22);
+
+            box-shadow:
+                0 14px 34px rgba(220,100,140,0.12);
+        }
+
+        .sold-out-icon{
+            font-size:28px;
+        }
+
+        .sold-out-panel strong{
+            display:block;
+            margin-bottom:5px;
+            font-size:18px;
+        }
+
+        .sold-out-panel p{
+            margin:0;
+            color:#795563;
+            font-size:14px;
+            line-height:1.5;
+        }
     </style>
 </head>
 
@@ -1068,10 +1119,16 @@
 
             <div class="price">${{ $product->price }}</div>
 
-            <p class="stock">
-                <span class="stock-dot"></span>
-                Available stock: {{ $product->stock }}
+            <p class="stock {{ $product->stock <= 0 ? 'stock-unavailable' : '' }}">
+                <span class="stock-dot {{ $product->stock <= 0 ? 'stock-dot-empty' : '' }}"></span>
+
+                @if($product->stock > 0)
+                    Available stock: {{ $product->stock }}
+                @else
+                    This product is currently out of stock.
+                @endif
             </p>
+
             @if($product->rarity)
 
                 @php
@@ -1148,53 +1205,76 @@
                 Product link copied!
             </div>
 
-            <div class="quantity-title">Quantity</div>
+            @if($product->stock > 0)
 
-            <form
-                action="/cart/add/{{ $product->id }}"
-                method="POST"
-                class="actions"
-            >
-                @csrf
-
-                <div class="quantity">
-                    <button
-                        type="button"
-                        class="quantity-control"
-                        onclick="decreaseProductQuantity()"
-                    >
-                        −
-                    </button>
-
-                    <span id="productQuantityText">1</span>
-
-                    <button
-                        type="button"
-                        class="quantity-control"
-                        onclick="increaseProductQuantity()"
-                    >
-                        +
-                    </button>
+                <div class="quantity-title">
+                    Quantity
                 </div>
 
-                <input
-                    type="hidden"
-                    name="quantity"
-                    id="productQuantityInput"
-                    value="1"
+                <form
+                    action="/cart/add/{{ $product->id }}"
+                    method="POST"
+                    class="actions"
                 >
-                <div id="quantityStockMessage" class="quantity-stock-message">
-                    Maximum available stock reached.
+                    @csrf
+
+                    <div class="quantity">
+                        <button
+                            type="button"
+                            class="quantity-control"
+                            onclick="decreaseProductQuantity()"
+                        >
+                            −
+                        </button>
+
+                        <span id="productQuantityText">1</span>
+
+                        <button
+                            type="button"
+                            class="quantity-control"
+                            onclick="increaseProductQuantity()"
+                        >
+                            +
+                        </button>
+                    </div>
+
+                    <input
+                        type="hidden"
+                        name="quantity"
+                        id="productQuantityInput"
+                        value="1"
+                    >
+
+                    <div
+                        id="quantityStockMessage"
+                        class="quantity-stock-message"
+                    >
+                        Maximum available stock reached.
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="add-btn"
+                    >
+                        🛒 Add to Cart
+                    </button>
+                </form>
+
+            @else
+
+                <div class="sold-out-panel">
+                    <span class="sold-out-icon">⚠</span>
+
+                    <div>
+                        <strong>Out of Stock</strong>
+
+                        <p>
+                            This item cannot be added to your cart right now.
+                        </p>
+                    </div>
                 </div>
 
-                <button
-                    type="submit"
-                    class="add-btn"
-                    {{ $product->stock <= 0 ? 'disabled' : '' }}
-                >
-                    {{ $product->stock > 0 ? '🛒 Add to Cart' : 'Out of Stock' }}
-                </button>
-            </form>
+            @endif
 
             <div class="info-row">
                 <div class="info-box">

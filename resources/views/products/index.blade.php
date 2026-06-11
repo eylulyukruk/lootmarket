@@ -1475,6 +1475,39 @@
                 0 4px 12px rgba(45,45,60,0.34),
                 0 0 0 2px rgba(255,255,255,0.35);
         }
+        .out-of-stock-badge{
+            position:absolute;
+            top:18px;
+            left:18px;
+            z-index:6;
+
+            padding:9px 14px;
+            border-radius:999px;
+
+            color:white;
+            font-size:13px;
+            font-weight:900;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff718f,
+                    #d74468
+                );
+
+            box-shadow:
+                0 10px 25px rgba(215,68,104,0.25);
+        }
+
+        .sold-out-card .product-image{
+            filter:grayscale(0.45);
+            opacity:0.72;
+        }
+
+        .sold-out-card .stock{
+            color:#d74468;
+            font-weight:800;
+        }
     </style>
 </head>
 <body>
@@ -1726,7 +1759,7 @@
 
 <section class="products">
     @foreach($products as $product)
-        <div class="card">
+        <div class="card {{ $product->stock <= 0 ? 'sold-out-card' : '' }}">
             @auth
                 <form action="/wishlist/toggle/{{ $product->id }}" method="POST">
                     @csrf
@@ -1740,6 +1773,11 @@
                     </button>
                 </form>
             @endauth
+                @if($product->stock <= 0)
+                    <div class="out-of-stock-badge">
+                        Out of Stock
+                    </div>
+                @endif
             @if($product->image)
                 <img src="{{ $product->image }}" class="product-image" alt="{{ $product->name }}">
             @endif
@@ -1804,7 +1842,13 @@
             <p class="description">{{ $product->description }}</p>
 
             <div class="price">${{ $product->price }}</div>
-            <p class="stock">Stock: {{ $product->stock }}</p>
+                <p class="stock">
+                    @if($product->stock > 0)
+                        Stock: {{ $product->stock }}
+                    @else
+                        Currently unavailable
+                    @endif
+                </p>
 
 
                 <a href="/products/{{ $product->id }}" class="view-button">
