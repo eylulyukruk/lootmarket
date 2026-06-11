@@ -21,6 +21,11 @@ class Order extends Model
         'shipping_method',
         'payment_method',
         'status',
+        'stock_restored',
+    ];
+
+    protected $casts = [
+        'stock_restored' => 'boolean',
     ];
 
     public function items()
