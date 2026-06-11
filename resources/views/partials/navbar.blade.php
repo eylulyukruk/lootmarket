@@ -184,7 +184,131 @@
         text-align: left;
         font-family: Arial, sans-serif;
     }
+    .cart-nav-link{
+        display:flex;
+        align-items:center;
+        gap:9px;
+
+        padding:0;
+
+        background:transparent;
+        border:none;
+        box-shadow:none;
+
+        color:#3a3a3a;
+        text-decoration:none;
+
+        transition:0.22s;
+    }
+
+    .cart-nav-link:hover{
+        transform:none;
+        background:transparent;
+        box-shadow:none;
+        color:#d46f8d;
+    }
+
+    .cart-icon-wrap{
+        position:relative;
+
+        width:auto;
+        height:auto;
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        border-radius:0;
+
+        color:#d46f8d;
+        font-size:20px;
+
+        background:transparent;
+    }
+
+    .cart-count{
+        position:absolute;
+        top:-12px;
+        right:-13px;
+
+        min-width:18px;
+        height:18px;
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        padding:0 4px;
+
+        border-radius:999px;
+
+        color:white;
+        font-size:11px;
+        font-weight:900;
+
+        background:
+            linear-gradient(
+                135deg,
+                #ff5fa2,
+                #8f8dff
+            );
+
+        border:2px solid #f1efff;
+        box-sizing:border-box;
+    }
+
+    .cart-details{
+        display:flex;
+        align-items:center;
+        gap:6px;
+    }
+
+    .cart-title{
+        color:inherit;
+        font-size:16px;
+        font-weight:700;
+    }
+
+    .cart-total{
+        color:#d46f8d;
+        font-size:13px;
+        font-weight:800;
+    }
+
+    .cart-nav-link:hover .cart-title,
+    .cart-nav-link:hover .cart-icon-wrap{
+        color:#d46f8d;
+    }
+
+    @media(max-width:750px){
+        .navbar{
+            padding:18px 20px;
+        }
+
+        .nav-links{
+            gap:14px;
+        }
+
+        .cart-details{
+            display:none;
+        }
+    }
 </style>
+
+@php
+    $navbarCart = session()->get('cart', []);
+
+    $navbarCartCount = 0;
+    $navbarCartTotal = 0;
+
+    foreach ($navbarCart as $cartItem) {
+        $quantity = (int) ($cartItem['quantity'] ?? 0);
+        $price = (float) ($cartItem['price'] ?? 0);
+
+        $navbarCartCount += $quantity;
+        $navbarCartTotal += $price * $quantity;
+    }
+@endphp
 
 <nav class="navbar">
     <a href="/products" class="logo">
@@ -194,7 +318,23 @@
 
     <div class="nav-links">
         <a href="/products">Products</a>
-        <a href="/cart">Cart</a>
+        <a href="/cart" class="cart-nav-link">
+    <span class="cart-icon-wrap">
+        <i class="fa-solid fa-cart-shopping"></i>
+
+        <span class="cart-count">
+            {{ $navbarCartCount }}
+        </span>
+    </span>
+
+            <span class="cart-details">
+        <span class="cart-title">Cart</span>
+
+        <span class="cart-total">
+            ${{ number_format($navbarCartTotal, 2) }}
+        </span>
+    </span>
+        </a>
 
         @auth
             <div class="account-dropdown">
