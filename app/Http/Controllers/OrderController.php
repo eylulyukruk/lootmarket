@@ -45,7 +45,7 @@ class OrderController extends Controller
         }
 
         try {
-            DB::transaction(function () use ($cart, $request) {
+            $orderId = DB::transaction(function () use ($cart, $request) {
                 $subtotal = 0;
                 $products = [];
 
@@ -106,6 +106,7 @@ class OrderController extends Controller
 
                     $product->decrement('stock', $item['quantity']);
                 }
+                return $order->id;
             });
         } catch (\Exception $exception) {
             return redirect('/cart')
@@ -113,6 +114,7 @@ class OrderController extends Controller
         }
 
         session()->forget('cart');
+        session()->put('last_order_id', $orderId);
 
         return redirect('/order-success')
             ->with('success', 'Your order has been placed successfully.');
@@ -120,7 +122,22 @@ class OrderController extends Controller
 
     public function orderSuccess()
     {
-        return view('products.order-success');
+        if (!auth()->check()) {
+            return redirect('/login');
+        }
+
+        $orderId = session()->get('last_order_id');
+
+        if (!$orderId) {
+            return redirect('/my-orders');
+        }
+
+        $order = Order::with('items')
+            ->where('id', $orderId)
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
+
+        return view('products.order-success', compact('order'));
     }
 
     public function myOrders()
