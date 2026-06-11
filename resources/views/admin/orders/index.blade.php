@@ -618,6 +618,18 @@
                 justify-content:flex-start;
             }
         }
+        .error-alert{
+            margin-bottom:24px;
+            padding:16px 20px;
+
+            border-radius:19px;
+
+            color:#a83e5d;
+            font-weight:800;
+
+            background:rgba(255,225,235,0.90);
+            border:1px solid rgba(240,95,127,0.25);
+        }
     </style>
 </head>
 
@@ -636,6 +648,12 @@
         @if(session('success'))
             <div class="success-alert">
                 {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="error-alert">
+                {{ session('error') }}
             </div>
         @endif
 
