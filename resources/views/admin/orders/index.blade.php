@@ -496,6 +496,128 @@
                 grid-template-columns:1fr;
             }
         }
+        .orders-toolbar{
+            margin-bottom:28px;
+            padding:22px 24px;
+
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:20px;
+            flex-wrap:wrap;
+
+            border-radius:28px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,235,245,0.78),
+                    rgba(235,237,255,0.76),
+                    rgba(225,242,255,0.74)
+                );
+
+            border:1px solid rgba(255,255,255,0.78);
+
+            box-shadow:
+                0 18px 45px rgba(160,170,255,0.13);
+        }
+
+        .filter-heading{
+            margin:0 0 5px;
+            color:#3f3f4d;
+            font-size:18px;
+            font-weight:900;
+        }
+
+        .filter-description{
+            margin:0;
+            color:#77778a;
+            font-size:14px;
+        }
+
+        .status-filters{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            gap:9px;
+            flex-wrap:wrap;
+        }
+
+        .status-filter{
+            padding:11px 16px;
+
+            border-radius:999px;
+
+            color:#626273;
+            font-size:14px;
+            font-weight:800;
+            text-decoration:none;
+
+            background:rgba(255,255,255,0.63);
+            border:1px solid rgba(255,255,255,0.80);
+
+            transition:0.23s;
+        }
+
+        .status-filter:hover{
+            color:#d44784;
+            transform:translateY(-2px);
+
+            background:rgba(255,255,255,0.90);
+
+            box-shadow:
+                0 10px 24px rgba(160,150,255,0.13);
+        }
+
+        .status-filter.active{
+            color:white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff7eb6,
+                    #8f8dff
+                );
+
+            box-shadow:
+                0 12px 28px rgba(160,145,255,0.24);
+        }
+
+        .filter-result{
+            padding:11px 15px;
+            border-radius:999px;
+
+            color:#d44784;
+            font-size:14px;
+            font-weight:900;
+            white-space:nowrap;
+
+            background:rgba(255,255,255,0.68);
+        }
+
+        .success-alert{
+            margin-bottom:24px;
+            padding:16px 20px;
+
+            border-radius:19px;
+
+            color:#246f52;
+            font-weight:800;
+
+            background:rgba(196,255,224,0.80);
+            border:1px solid rgba(120,220,175,0.34);
+        }
+
+        @media(max-width:900px){
+            .orders-toolbar{
+                align-items:flex-start;
+                flex-direction:column;
+            }
+
+            .status-filters{
+                justify-content:flex-start;
+            }
+        }
     </style>
 </head>
 
@@ -509,6 +631,51 @@
 
         <div class="page-title">
             <h1>Orders</h1>
+        </div>
+
+        @if(session('success'))
+            <div class="success-alert">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <div class="orders-toolbar">
+
+            <div>
+                <p class="filter-heading">
+                    Filter Orders
+                </p>
+
+                <p class="filter-description">
+                    Display orders according to their current status.
+                </p>
+            </div>
+
+            <div class="status-filters">
+
+                <a
+                    href="/admin/orders"
+                    class="status-filter {{ !$selectedStatus ? 'active' : '' }}"
+                >
+                    All Orders
+                </a>
+
+                @foreach($statuses as $status)
+                    <a
+                        href="/admin/orders?status={{ urlencode($status) }}"
+                        class="status-filter {{ $selectedStatus === $status ? 'active' : '' }}"
+                    >
+                        {{ $status }}
+                    </a>
+                @endforeach
+
+            </div>
+
+            <div class="filter-result">
+                {{ $orders->count() }}
+                {{ $orders->count() === 1 ? 'Order' : 'Orders' }}
+            </div>
+
         </div>
 
         @if($orders->count() > 0)
@@ -553,22 +720,21 @@
                                         <span>⌄</span>
                                     </button>
 
-                                    <div class="custom-status-menu" id="status-menu-{{ $order->id }}">
-                                        <button type="button" onclick="selectStatus({{ $order->id }}, 'Pending')">
-                                            Pending
-                                        </button>
-
-                                        <button type="button" onclick="selectStatus({{ $order->id }}, 'Processing')">
-                                            Processing
-                                        </button>
-
-                                        <button type="button" onclick="selectStatus({{ $order->id }}, 'Delivered')">
-                                            Delivered
-                                        </button>
-
-                                        <button type="button" onclick="selectStatus({{ $order->id }}, 'Cancelled')">
-                                            Cancelled
-                                        </button>
+                                    <div
+                                        class="custom-status-menu"
+                                        id="status-menu-{{ $order->id }}"
+                                    >
+                                        @foreach($statuses as $status)
+                                            <button
+                                                type="button"
+                                                onclick="selectStatus(
+                {{ $order->id }},
+                '{{ $status }}'
+            )"
+                                            >
+                                                {{ $status }}
+                                            </button>
+                                        @endforeach
                                     </div>
                                 </div>
 
@@ -683,7 +849,11 @@
         @else
 
             <div class="empty">
-                No orders yet.
+                @if($selectedStatus)
+                    No {{ $selectedStatus }} orders were found.
+                @else
+                    No orders yet.
+                @endif
             </div>
 
         @endif
