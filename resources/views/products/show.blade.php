@@ -1043,6 +1043,201 @@
             font-size:14px;
             line-height:1.5;
         }
+        /* TABLET */
+        @media(max-width:900px){
+            .page{
+                margin:40px auto;
+                padding:0 24px;
+            }
+
+            .detail-card{
+                grid-template-columns:1fr;
+                gap:30px;
+                padding:30px;
+            }
+
+            .detail-image{
+                height:380px;
+            }
+
+            .thumb-row{
+                justify-content:center;
+                flex-wrap:wrap;
+            }
+
+            .actions{
+                flex-direction:row;
+                align-items:center;
+                flex-wrap:wrap;
+            }
+
+            .info-row{
+                grid-template-columns:1fr;
+            }
+
+            .related-section{
+                margin-top:60px;
+                padding:0 24px;
+            }
+        }
+
+        /* PHONE */
+        @media(max-width:650px){
+            .page{
+                margin:28px auto;
+                padding:0 16px;
+            }
+
+            .detail-card{
+                gap:24px;
+                padding:18px;
+                border-radius:28px;
+            }
+
+            .image-box{
+                padding:12px;
+                border-radius:23px;
+            }
+
+            .detail-image{
+                height:260px;
+                border-radius:18px;
+            }
+
+            .thumb-row{
+                margin-top:14px;
+                padding:12px;
+                gap:10px;
+                border-radius:19px;
+            }
+
+            .thumb{
+                width:82px;
+                height:56px;
+                border-width:2px;
+            }
+
+            .breadcrumb{
+                margin-bottom:17px;
+                font-size:13px;
+                line-height:1.5;
+            }
+
+            .badge{
+                padding:8px 13px;
+                margin-right:5px;
+                margin-bottom:9px;
+                font-size:12px;
+            }
+
+            h1{
+                margin:13px 0 10px;
+                font-size:34px;
+                line-height:1.12;
+                overflow-wrap:anywhere;
+            }
+
+            .description{
+                font-size:16px;
+                line-height:1.6;
+            }
+
+            .price{
+                margin:20px 0 12px;
+                font-size:32px;
+            }
+
+            .stock{
+                margin-bottom:20px;
+                font-size:14px;
+                line-height:1.5;
+            }
+
+            .skin-tier,
+            .rarity-area{
+                width:100%;
+                max-width:none;
+                box-sizing:border-box;
+            }
+
+            .mini-actions{
+                margin:17px 0;
+            }
+
+            .round-btn{
+                width:50px;
+                height:50px;
+                font-size:21px;
+            }
+
+            .actions{
+                width:100%;
+                flex-direction:column;
+                align-items:stretch;
+                gap:14px;
+            }
+
+            .quantity{
+                width:100%;
+                padding:15px 18px;
+                box-sizing:border-box;
+            }
+
+            .add-btn{
+                width:100%;
+                padding:17px 20px;
+                box-sizing:border-box;
+            }
+
+            .quantity-stock-message{
+                width:auto;
+                margin-top:0;
+                line-height:1.4;
+            }
+
+            .sold-out-panel{
+                max-width:none;
+                box-sizing:border-box;
+            }
+
+            .info-row{
+                grid-template-columns:1fr;
+                gap:11px;
+                margin:24px 0;
+            }
+
+            .info-box{
+                padding:16px;
+            }
+
+            .related-section{
+                margin-top:50px;
+                padding:0 16px;
+            }
+
+            .related-header h2{
+                font-size:28px;
+            }
+
+            .related-header p{
+                font-size:14px;
+                line-height:1.5;
+            }
+
+            .related-grid{
+                grid-template-columns:1fr;
+            }
+
+            .related-card{
+                width:100%;
+                max-width:400px;
+                margin:0 auto;
+            }
+
+            .related-image{
+                height:190px;
+            }
+        }
     </style>
 </head>
 
