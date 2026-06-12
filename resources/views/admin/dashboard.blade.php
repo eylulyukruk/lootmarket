@@ -711,6 +711,341 @@
             box-shadow:
                 0 14px 34px rgba(150,130,255,0.24);
         }
+        .dashboard-management-grid{
+            display:grid;
+            grid-template-columns:repeat(2,minmax(0,1fr));
+            gap:26px;
+            margin-bottom:42px;
+        }
+
+        .dashboard-panel{
+            min-width:0;
+            padding:28px;
+
+            border-radius:30px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,225,238,0.92),
+                    rgba(246,237,255,0.92),
+                    rgba(220,234,253,0.92)
+                );
+
+            border:1px solid rgba(255,255,255,0.75);
+
+            box-shadow:
+                0 22px 55px rgba(160,170,255,0.14);
+        }
+
+        .panel-header{
+            display:flex;
+            align-items:flex-start;
+            justify-content:space-between;
+            gap:20px;
+            margin-bottom:22px;
+        }
+
+        .panel-header h2{
+            margin:0 0 7px;
+            color:#2f2f3a;
+            font-size:25px;
+        }
+
+        .panel-header p{
+            margin:0;
+            color:#77778a;
+            font-size:14px;
+            line-height:1.5;
+        }
+
+        .panel-link{
+            flex-shrink:0;
+
+            padding:11px 16px;
+            border-radius:16px;
+
+            color:white;
+            text-decoration:none;
+            font-size:13px;
+            font-weight:900;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff7eb6,
+                    #8f8dff
+                );
+
+            box-shadow:
+                0 11px 26px rgba(160,145,255,0.22);
+
+            transition:0.24s;
+        }
+
+        .panel-link:hover{
+            transform:translateY(-2px);
+        }
+
+        .stock-product-list,
+        .latest-order-list{
+            display:flex;
+            flex-direction:column;
+            gap:13px;
+        }
+
+        .stock-product-item,
+        .latest-order-item{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            gap:18px;
+
+            padding:15px 17px;
+            border-radius:21px;
+
+            background:rgba(255,255,255,0.58);
+            border:1px solid rgba(255,255,255,0.72);
+        }
+
+        .stock-product-main{
+            min-width:0;
+
+            display:flex;
+            align-items:center;
+            gap:13px;
+        }
+
+        .stock-product-main div:last-child{
+            min-width:0;
+        }
+
+        .stock-product-image,
+        .stock-product-placeholder{
+            width:58px;
+            height:48px;
+            min-width:58px;
+
+            border-radius:14px;
+        }
+
+        .stock-product-image{
+            object-fit:cover;
+        }
+
+        .stock-product-placeholder{
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            font-size:22px;
+            background:rgba(255,255,255,0.70);
+        }
+
+        .stock-product-main strong{
+            display:block;
+
+            max-width:210px;
+
+            color:#3f3f4d;
+            font-size:15px;
+
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
+
+        .stock-product-main span{
+            display:block;
+            margin-top:5px;
+
+            color:#7a7a88;
+            font-size:13px;
+        }
+
+        .stock-product-actions{
+            flex-shrink:0;
+
+            display:flex;
+            align-items:center;
+            gap:9px;
+        }
+
+        .stock-value{
+            padding:8px 11px;
+            border-radius:999px;
+
+            font-size:12px;
+            font-weight:900;
+            white-space:nowrap;
+        }
+
+        .stock-low{
+            color:#a66a00;
+            background:rgba(255,194,74,0.22);
+        }
+
+        .stock-empty{
+            color:#b03d5c;
+            background:rgba(240,82,103,0.17);
+        }
+
+        .quick-edit-button{
+            padding:8px 12px;
+            border-radius:13px;
+
+            color:#7652cf;
+            text-decoration:none;
+            font-size:12px;
+            font-weight:900;
+
+            background:rgba(225,218,255,0.70);
+        }
+
+        .latest-order-main{
+            min-width:0;
+        }
+
+        .latest-order-main strong{
+            display:block;
+            color:#d46f8d;
+            font-size:15px;
+        }
+
+        .latest-order-main span{
+            display:block;
+
+            max-width:220px;
+            margin-top:5px;
+
+            color:#555563;
+            font-size:14px;
+
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
+
+        .latest-order-main small{
+            display:block;
+            margin-top:5px;
+
+            color:#90909d;
+            font-size:12px;
+        }
+
+        .latest-order-right{
+            flex-shrink:0;
+
+            display:flex;
+            flex-direction:column;
+            align-items:flex-end;
+            gap:8px;
+        }
+
+        .order-status{
+            padding:7px 11px;
+            border-radius:999px;
+
+            color:white;
+            font-size:11px;
+            font-weight:900;
+        }
+
+        .status-pending{
+            background:linear-gradient(135deg,#ff9fc5,#a892ff);
+        }
+
+        .status-processing{
+            background:linear-gradient(135deg,#8c9cff,#6ec9ef);
+        }
+
+        .status-shipped{
+            background:linear-gradient(135deg,#69cbe1,#658ff1);
+        }
+
+        .status-delivered,
+        .status-completed{
+            background:linear-gradient(135deg,#62d4a8,#68aef2);
+        }
+
+        .status-cancelled{
+            background:linear-gradient(135deg,#ff7a92,#d94a69);
+        }
+
+        .latest-order-total{
+            color:#d46f8d;
+            font-size:15px;
+        }
+
+        .warning-stat{
+            border-color:rgba(255,181,34,0.22);
+        }
+
+        .danger-stat{
+            border-color:rgba(240,82,103,0.22);
+        }
+
+        @media(max-width:1150px){
+            .dashboard-management-grid{
+                grid-template-columns:1fr;
+            }
+        }
+
+        @media(max-width:700px){
+            .content{
+                padding:28px 18px;
+            }
+
+            .panel-header,
+            .stock-product-item,
+            .latest-order-item{
+                align-items:flex-start;
+                flex-direction:column;
+            }
+
+            .stock-product-actions,
+            .latest-order-right{
+                width:100%;
+                align-items:center;
+                flex-direction:row;
+                justify-content:space-between;
+            }
+        }
+        .stat-card{
+            min-width:0;
+        }
+
+        .stat-content{
+            flex:1;
+            min-width:0;
+        }
+
+        .revenue-card{
+            grid-column:span 2;
+        }
+
+        .revenue-card .stat-content{
+            flex:1;
+            min-width:0;
+        }
+
+        .revenue-card p{
+            font-size:38px;
+            line-height:1.05;
+            letter-spacing:-1px;
+            white-space:nowrap;
+        }
+
+        @media(max-width:900px){
+            .revenue-card{
+                grid-column:span 1;
+            }
+
+            .revenue-card p{
+                font-size:28px;
+            }
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -752,11 +1087,15 @@
                 </div>
             </div>
 
-            <div class="stat-card">
+            <div class="stat-card revenue-card">
                 <div class="stat-icon">💸</div>
-                <div>
+
+                <div class="stat-content">
                     <h3>Total Revenue</h3>
-                    <p>${{ $totalRevenue }}</p>
+
+                    <p>
+                        ${{ number_format($totalRevenue, 2) }}
+                    </p>
                 </div>
             </div>
 
@@ -774,6 +1113,184 @@
                     <h3>Open Messages</h3>
                     <p>{{ $openMessages }}</p>
                 </div>
+            </div>
+            <div class="stat-card warning-stat">
+                <div class="stat-icon">⚠️</div>
+
+                <div>
+                    <h3>Low Stock Products</h3>
+                    <p>{{ $lowStockCount }}</p>
+                </div>
+            </div>
+
+            <div class="stat-card danger-stat">
+                <div class="stat-icon">🚫</div>
+
+                <div>
+                    <h3>Out of Stock</h3>
+                    <p>{{ $outOfStockCount }}</p>
+                </div>
+            </div>
+
+        </div>
+        <div class="dashboard-management-grid">
+
+            <div class="dashboard-panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h2>Low Stock Products</h2>
+
+                        <p>
+                            Products with five or fewer items remaining.
+                        </p>
+                    </div>
+
+                    <a href="/admin/products" class="panel-link">
+                        View Products
+                    </a>
+                </div>
+
+                @if($lowStockProducts->count() > 0)
+
+                    <div class="stock-product-list">
+
+                        @foreach($lowStockProducts as $product)
+
+                            <div class="stock-product-item">
+
+                                <div class="stock-product-main">
+
+                                    @if($product->image)
+                                        <img
+                                            src="{{ $product->image }}"
+                                            alt="{{ $product->name }}"
+                                            class="stock-product-image"
+                                        >
+                                    @else
+                                        <div class="stock-product-placeholder">
+                                            📦
+                                        </div>
+                                    @endif
+
+                                    <div>
+                                        <strong>{{ $product->name }}</strong>
+
+                                        <span>
+                                    {{ $product->game ?: 'No game / brand' }}
+                                </span>
+                                    </div>
+
+                                </div>
+
+                                <div class="stock-product-actions">
+
+                            <span
+                                class="stock-value
+                                {{ $product->stock <= 0 ? 'stock-empty' : 'stock-low' }}"
+                            >
+                                @if($product->stock <= 0)
+                                    Out of Stock
+                                @else
+                                    {{ $product->stock }} Left
+                                @endif
+                            </span>
+
+                                    <a
+                                        href="/admin/products/edit/{{ $product->id }}"
+                                        class="quick-edit-button"
+                                    >
+                                        Edit
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        @endforeach
+
+                    </div>
+
+                @else
+
+                    <div class="empty-box">
+                        All products currently have sufficient stock.
+                    </div>
+
+                @endif
+
+            </div>
+
+            <div class="dashboard-panel">
+
+                <div class="panel-header">
+                    <div>
+                        <h2>Latest Orders</h2>
+
+                        <p>
+                            The five most recently placed customer orders.
+                        </p>
+                    </div>
+
+                    <a href="/admin/orders" class="panel-link">
+                        View Orders
+                    </a>
+                </div>
+
+                @if($latestOrders->count() > 0)
+
+                    <div class="latest-order-list">
+
+                        @foreach($latestOrders as $order)
+
+                            @php
+                                $statusClass = strtolower($order->status);
+                            @endphp
+
+                            <div class="latest-order-item">
+
+                                <div class="latest-order-main">
+
+                                    <strong>
+                                        Order #LM-{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}
+                                    </strong>
+
+                                    <span>
+                                {{ $order->name ?? $order->user->name ?? 'Unknown Customer' }}
+                            </span>
+
+                                    <small>
+                                        {{ $order->created_at->format('d M Y, H:i') }}
+                                    </small>
+
+                                </div>
+
+                                <div class="latest-order-right">
+
+                            <span class="order-status status-{{ $statusClass }}">
+                                {{ $order->status }}
+                            </span>
+
+                                    <strong class="latest-order-total">
+                                        ${{ number_format($order->total, 2) }}
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        @endforeach
+
+                    </div>
+
+                @else
+
+                    <div class="empty-box">
+                        No orders have been placed yet.
+                    </div>
+
+                @endif
+
             </div>
 
         </div>
