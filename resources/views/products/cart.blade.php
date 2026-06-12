@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LootMarket Cart</title>
 
     <style>
@@ -403,6 +404,114 @@
 
             .summary-card{
                 position:static;
+            }
+        }
+        @media(max-width:650px){
+            .page{
+                margin:32px auto;
+                padding:0 16px;
+            }
+
+            .cart-header{
+                margin-bottom:28px;
+            }
+
+            .cart-header h1{
+                font-size:40px;
+                line-height:1.1;
+            }
+
+            .cart-header p{
+                padding:0 10px;
+                font-size:15px;
+                line-height:1.5;
+            }
+
+            .cart-layout{
+                gap:24px;
+            }
+
+            .cart-list{
+                gap:18px;
+            }
+
+            .cart-item{
+                grid-template-columns:1fr;
+                gap:17px;
+                padding:17px;
+                border-radius:25px;
+            }
+
+            .cart-image{
+                width:100%;
+                height:210px;
+                border-radius:18px;
+            }
+
+            .item-info h2{
+                font-size:22px;
+                line-height:1.25;
+                overflow-wrap:anywhere;
+            }
+
+            .item-price{
+                font-size:22px;
+            }
+
+            .item-meta{
+                font-size:14px;
+            }
+
+            .quantity-controls{
+                flex-wrap:wrap;
+            }
+
+            .cart-item > form{
+                width:100%;
+            }
+
+            .remove-btn{
+                width:100%;
+                padding:14px 18px;
+            }
+
+            .summary-card{
+                padding:22px;
+                border-radius:26px;
+            }
+
+            .summary-card h2{
+                font-size:27px;
+            }
+
+            .summary-row{
+                gap:14px;
+                font-size:15px;
+            }
+
+            .summary-total{
+                gap:14px;
+                font-size:22px;
+            }
+
+            .checkout-btn,
+            .continue-btn{
+                width:100%;
+                box-sizing:border-box;
+            }
+
+            .empty-cart{
+                padding:48px 20px;
+                border-radius:26px;
+            }
+
+            .empty-cart h2{
+                font-size:28px;
+            }
+
+            .glow-1,
+            .glow-2{
+                opacity:0.16;
             }
         }
     </style>

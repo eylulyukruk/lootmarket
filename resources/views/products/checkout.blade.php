@@ -638,12 +638,6 @@
             transform:translateX(3px);
         }
 
-        @media(max-width:700px){
-            .phone-row{
-                grid-template-columns:1fr;
-            }
-        }
-
         .phone-row input{
             margin-bottom:0;
         }
@@ -656,6 +650,167 @@
         @media(max-width:700px){
             .phone-row{
                 grid-template-columns:1fr;
+            }
+        }
+        @media(max-width:650px){
+            .page{
+                margin:30px auto;
+                padding:0 15px 45px;
+            }
+
+            .checkout-header{
+                margin-bottom:28px;
+            }
+
+            .checkout-header h1{
+                font-size:39px;
+                line-height:1.1;
+            }
+
+            .checkout-header p{
+                padding:0 8px;
+                font-size:15px;
+                line-height:1.5;
+            }
+
+            .checkout-layout{
+                gap:22px;
+            }
+
+            .payment-card,
+            .summary-card{
+                padding:19px;
+                border-radius:26px;
+            }
+
+            .form-section-title{
+                margin:27px 0 17px;
+                font-size:21px;
+            }
+
+            .form-section-title.first{
+                margin-top:0;
+            }
+
+            input,
+            textarea{
+                padding:15px 16px;
+                border-radius:16px;
+                font-size:15px;
+            }
+
+            textarea{
+                min-height:105px;
+            }
+
+            .phone-row{
+                grid-template-columns:1fr;
+                gap:12px;
+            }
+
+            .country-code-trigger{
+                min-height:52px;
+                padding:14px 16px;
+            }
+
+            .country-code-menu{
+                max-height:230px;
+            }
+
+            .checkout-option{
+                align-items:flex-start;
+                padding:14px 15px;
+            }
+
+            .checkout-option span{
+                align-items:flex-start;
+                flex-direction:column;
+                gap:5px;
+            }
+
+            .checkout-option small{
+                font-size:12px;
+            }
+
+            .fake-card{
+                min-height:145px;
+                padding:21px;
+                border-radius:24px;
+            }
+
+            .fake-card-top{
+                margin-bottom:31px;
+                font-size:14px;
+            }
+
+            .fake-card-number{
+                margin-bottom:20px;
+                font-size:18px;
+                letter-spacing:2px;
+                overflow-wrap:anywhere;
+            }
+
+            .fake-card-bottom{
+                gap:15px;
+                font-size:12px;
+            }
+
+            .pay-btn{
+                margin-top:23px;
+                padding:17px 16px;
+                font-size:15px;
+            }
+
+            .secure-note{
+                font-size:13px;
+            }
+
+            .section-title{
+                font-size:25px;
+            }
+
+            .summary-item{
+                display:grid;
+                grid-template-columns:64px minmax(0,1fr);
+                gap:12px;
+                align-items:center;
+            }
+
+            .summary-img{
+                width:64px;
+                height:52px;
+            }
+
+            .summary-info{
+                min-width:0;
+            }
+
+            .summary-info h3{
+                overflow-wrap:anywhere;
+            }
+
+            .summary-price{
+                grid-column:2;
+                justify-self:start;
+            }
+
+            .summary-row{
+                gap:14px;
+                font-size:14px;
+            }
+
+            .summary-total{
+                gap:14px;
+                font-size:21px;
+            }
+
+            .back-btn{
+                padding:14px 18px;
+            }
+
+            .glow-1,
+            .glow-2{
+                opacity:0.16;
             }
         }
     </style>
@@ -815,10 +970,6 @@
                 </div>
 
                 @error('phone_code')
-                <p class="field-error">{{ $message }}</p>
-                @enderror
-
-                @error('phone')
                 <p class="field-error">{{ $message }}</p>
                 @enderror
 
