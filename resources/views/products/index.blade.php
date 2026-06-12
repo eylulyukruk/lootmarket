@@ -1508,6 +1508,193 @@
             color:#d74468;
             font-weight:800;
         }
+        /* TABLET */
+        @media(max-width:900px){
+            .hero{
+                padding:60px 24px 35px;
+            }
+
+            .hero h1{
+                font-size:54px;
+                line-height:1.08;
+                margin-bottom:18px;
+            }
+
+            .featured-categories{
+                padding:15px 24px 35px;
+            }
+
+            .category-grid{
+                grid-template-columns:repeat(2, minmax(0, 1fr));
+            }
+
+            .products{
+                grid-template-columns:repeat(2, minmax(0, 1fr));
+                padding:30px 24px 60px;
+            }
+
+            .card{
+                width:100%;
+            }
+
+            .filter-panel{
+                margin:10px 24px 26px;
+            }
+
+            .planet-left{
+                width:180px;
+                height:180px;
+                left:-100px;
+            }
+
+            .planet-right{
+                width:280px;
+                height:280px;
+                right:-170px;
+            }
+        }
+
+        /* PHONE */
+        @media(max-width:650px){
+            .hero{
+                padding:48px 18px 28px;
+            }
+
+            .hero h1{
+                font-size:42px;
+                line-height:1.08;
+                letter-spacing:-1px;
+                overflow-wrap:anywhere;
+            }
+
+            .hero p{
+                max-width:340px;
+                margin:0 auto;
+                font-size:15px;
+                line-height:1.55;
+            }
+
+            .featured-categories{
+                padding:10px 18px 30px;
+            }
+
+            .section-header{
+                margin-bottom:22px;
+            }
+
+            .section-header h2,
+            .products-header h2{
+                font-size:29px;
+                line-height:1.15;
+            }
+
+            .section-header p,
+            .products-header p{
+                padding:0 10px;
+                font-size:14px;
+                line-height:1.5;
+            }
+
+            .category-grid{
+                grid-template-columns:1fr;
+            }
+
+            .category-card{
+                padding:24px 21px;
+            }
+
+            .filter-panel{
+                margin:8px 18px 24px;
+                padding:16px;
+                flex-direction:column;
+                align-items:stretch;
+                border-radius:24px;
+            }
+
+            .filter-input,
+            .filter-input.small,
+            .custom-filter-dropdown,
+            .custom-filter-button,
+            .filter-submit,
+            .filter-reset{
+                width:100%;
+                min-width:0;
+                box-sizing:border-box;
+            }
+
+            .custom-filter-menu{
+                width:100%;
+                box-sizing:border-box;
+            }
+
+            .filter-submit,
+            .filter-reset{
+                text-align:center;
+            }
+
+            .products-header{
+                padding:0 18px;
+            }
+
+            .products{
+                grid-template-columns:1fr;
+                gap:26px;
+                padding:28px 18px 55px;
+            }
+
+            .card{
+                max-width:420px;
+                margin:0 auto;
+                padding:20px;
+                border-radius:26px;
+            }
+
+            .product-image{
+                height:220px;
+            }
+
+            .card h2{
+                font-size:25px;
+                line-height:1.2;
+            }
+
+            .description{
+                min-height:auto;
+                line-height:1.5;
+            }
+
+            .badges{
+                display:flex;
+                flex-wrap:wrap;
+                gap:7px;
+            }
+
+            .badge{
+                margin:0;
+                padding:8px 13px;
+                font-size:13px;
+            }
+
+            .planet-left{
+                width:130px;
+                height:130px;
+                left:-85px;
+                top:500px;
+                opacity:0.6;
+            }
+
+            .planet-right{
+                width:200px;
+                height:200px;
+                right:-145px;
+                top:680px;
+                opacity:0.48;
+            }
+
+            .tiny-planet{
+                display:none;
+            }
+        }
     </style>
 </head>
 <body>

@@ -288,9 +288,130 @@
         .nav-links{
             gap:14px;
         }
+    }
+    .mobile-menu-button{
+        display:none;
+
+        width:46px;
+        height:46px;
+
+        align-items:center;
+        justify-content:center;
+
+        border:none;
+        border-radius:16px;
+
+        color:#d94d91;
+        font-size:21px;
+        cursor:pointer;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(255,220,237,0.88),
+                rgba(220,225,255,0.88)
+            );
+
+        box-shadow:
+            0 10px 24px rgba(160,150,220,0.14);
+    }
+
+    @media(max-width:800px){
+        .navbar{
+            padding:16px 18px;
+            flex-wrap:wrap;
+        }
+
+        .logo{
+            font-size:23px;
+        }
+
+        .logo img{
+            width:42px;
+            height:42px;
+            margin-right:9px;
+        }
+
+        .mobile-menu-button{
+            display:flex;
+        }
+
+        .nav-links{
+            display:none;
+
+            width:100%;
+            margin-top:16px;
+            padding:16px;
+
+            flex-direction:column;
+            align-items:stretch;
+            gap:8px;
+
+            box-sizing:border-box;
+            border-radius:24px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(255,240,247,0.97),
+                    rgba(232,240,255,0.97)
+                );
+
+            border:1px solid rgba(255,255,255,0.78);
+
+            box-shadow:
+                0 18px 45px rgba(160,170,255,0.18);
+        }
+
+        .nav-links.mobile-open{
+            display:flex;
+        }
+
+        .nav-links > a,
+        .account-button{
+            width:100%;
+            margin:0;
+            padding:13px 15px;
+
+            box-sizing:border-box;
+            border-radius:15px;
+
+            text-align:left;
+            font-size:15px;
+        }
+
+        .nav-links > a:hover,
+        .account-button:hover{
+            background:rgba(255,255,255,0.62);
+        }
+
+        .cart-nav-link{
+            padding:12px 15px;
+        }
 
         .cart-details{
-            display:none;
+            display:flex;
+        }
+
+        .account-dropdown{
+            width:100%;
+        }
+
+        .account-button{
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+        }
+
+        .account-menu{
+            position:static;
+
+            width:auto;
+            margin-top:8px;
+            padding:14px;
+
+            box-shadow:none;
+            border-radius:20px;
         }
     }
 </style>
@@ -316,7 +437,17 @@
         <span>LootMarket</span>
     </a>
 
-    <div class="nav-links">
+    <button
+        type="button"
+        class="mobile-menu-button"
+        id="mobileMenuButton"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+    >
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <div class="nav-links" id="mobileNavLinks">
         <a href="/products">Products</a>
         <a href="/cart" class="cart-nav-link">
     <span class="cart-icon-wrap">
@@ -427,6 +558,29 @@
             document.addEventListener("click", function () {
                 menu.classList.remove("show");
                 button.classList.remove("active");
+            });
+        }
+        const mobileMenuButton =
+            document.getElementById('mobileMenuButton');
+
+        const mobileNavLinks =
+            document.getElementById('mobileNavLinks');
+
+        if (mobileMenuButton && mobileNavLinks) {
+            mobileMenuButton.addEventListener('click', function (event) {
+                event.stopPropagation();
+
+                const isOpen =
+                    mobileNavLinks.classList.toggle('mobile-open');
+
+                mobileMenuButton.setAttribute(
+                    'aria-expanded',
+                    isOpen ? 'true' : 'false'
+                );
+
+                mobileMenuButton.innerHTML = isOpen
+                    ? '<i class="fa-solid fa-xmark"></i>'
+                    : '<i class="fa-solid fa-bars"></i>';
             });
         }
     });
